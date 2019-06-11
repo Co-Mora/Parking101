@@ -1,0 +1,34 @@
+<html><head><style>
+                  :root {
+                      --main-width: 800px;
+                  }
+
+                  body {
+                      width: var(--main-width);
+                  }
+
+                  img {
+                      width: var(--main-width);
+                  }
+
+                  .bordered-table {
+                      border: 1px solid #d3d3d3;
+                      border-collapse: collapse;
+                      line-height: 1.5;
+                      padding: 5px
+                  }
+
+                  .red {
+                      color: red;
+                  }
+
+                  .bold {
+                      font-weight: bold;
+                  }
+
+                  .right {
+                      text-align: right;
+                  }
+
+                  .invoice-box{ max-width:800px; margin:auto; padding:30px; border:1px solid #eee; box-shadow:0 0 10px rgba(0, 0, 0, .15); font-size:16px; line-height:24px; font-family:"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; color:#555; }                   .invoice-box table{ width:100%; line-height:inherit; text-align:left; }                   .invoice-box table tr.heading2 td{font-weight:bold;}                   .invoice-box table tr.heading3 td{font-size:10px}                   .invoice-box table td{ padding:5px; vertical-align:top; }.invoice-box table tr td:nth-child(2){ text-align:right; }td:nth-child(3){ text-align:right; }                   .invoice-box table tr.top table td{ padding-bottom:20px; }                   .invoice-box table tr.top table td.title{ font-size:45px; line-height:45px; color:#333; }                   .invoice-box table tr.information table td{ padding-bottom:40px; }                   .invoice-box table tr.heading td{ background:#eee; border-bottom:1px solid #ddd; font-weight:bold; }                   .invoice-box table tr.details td{ padding-bottom:20px; }                   .invoice-box table tr.item td{ border-bottom:1px solid #eee; }                   .invoice-box table tr.item.last td{ border-bottom:none; }                   .invoice-box table tr.total                   .invoice-box table tr.total-pay td:nth-child(3){ border-top:2px solid #eee; font-weight:bold; }                   .invoice-box table tr.total-pay td:nth-child(3){ border-top:1px solid #eee; font-weight:bold; } {                   .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; }                   .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } }
+                  </style></head><body class="invoice-box"><img class="img_header" src="https://sys2.parkaidemobile.com/2bd7ce64-8c17-4104-850f-56fe381f1c4f.png" ><br><div style="float:right"><h2 class="right">TAX INVOICE</h2><table><tr><td>Car Park:<td><td class="right"><b>The Intermark</b><td></div><tr><td>Account No:<td><td class="right"><b>12341234</b><td></div><tr><td>SST:<td><td class="right"><b>12341234</b><td></div></table></div><div><b>JulyTech</b><div>line1</div><div>line2</div><div>line3</div><div>line4</div><div>line5</div><div>lineN</div></div><br>TO:<div><b>PNS carpark</b><div>line1</div><div>line2</div><div>line3</div><div>line4</div><div>line5</div><div>lineN</div></div><br><div>ATTENTION: JASON SOONG</div><table class="bordered-table" style="width: 100%"><tr><th class="bordered-table">No.</th><th class="bordered-table">Description</th><th class="bordered-table">Unit Price (RM)</th><th class="bordered-table">Quantity</th><th class="bordered-table">Total Exclusive SST (RM)</th><th class="bordered-table">0% SST (RM)</th><th class="bordered-table">Total Inclusive SST (RM)</th></tr><tr><td class="bordered-table">1</td><td class="bordered-table">Monthly Parking Fees...</td><td class="bordered-table right">122.64</td><td class="bordered-table right">1</td><td class="bordered-table right">122.64</td><td class="bordered-table right">0.00</td><td class="bordered-table right">122.64</td></tr><tr><td class="bordered-table">2</td><td class="bordered-table">Monthly Parking Fees...</td><td class="bordered-table right">122.64</td><td class="bordered-table right">1</td><td class="bordered-table right">122.64</td><td class="bordered-table right">0.00</td><td class="bordered-table right">122.64</td></tr><tr><td class="bordered-table">3</td><td class="bordered-table">Monthly Parking Fees...</td><td class="bordered-table right">122.64</td><td class="bordered-table right">1</td><td class="bordered-table right">122.64</td><td class="bordered-table right">0.00</td><td class="bordered-table right">122.64</td></tr><tr><td class="bordered-table bold right" colspan="4">Total Amount Due</td><td class="bordered-table bold right">367.92</td><td class="bordered-table bold right">0.00</td><td class="bordered-table bold right">367.92</td></tr><tr><td class="bordered-table bold right" colspan="4">Total Payable Inclusive 0% SST :</td><td class="bordered-table bold right" colspan="3">367.92</td></tr></table><br><div>Deposti will only....</div><div>Online payment ....</div><div>for any termination....</div><br><div>This is a computer generated document. No signature is required</div><br><img class="img_footer" src="https://sys2.parkaidemobile.com/3aa38348-4078-4483-a9fa-e4d6c16161f1.png"></body></html>
