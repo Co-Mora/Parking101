@@ -137,6 +137,9 @@ import Profile from './components/PageProfile/Profile'
 import Verify from './components/VerifyUser/Verify'
 
 
+// Route -> PageNotFound -> NotFound
+import NotFound from './components/PageNotFound/NotFound'
+
 
 
 const router = new VueRouter({
@@ -168,15 +171,15 @@ const router = new VueRouter({
             name: 'login',
             component: Login
         },
-        // {
-        //     path: '/404',
-        //     name: '404',
-        //     component: NotFound
-        // },
-        // {
-        //     path: '*',
-        //     redirect: '/404'
-        // },
+        {
+            path: '/404',
+            name: '404',
+            component: NotFound
+        },
+        {
+            path: '*',
+            redirect: '/404'
+        },
         {
             path: '/carpark/zone',
             name: 'zone',
