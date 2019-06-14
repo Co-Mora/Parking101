@@ -136,6 +136,10 @@ import Profile from './components/PageProfile/Profile'
 // Route -> VerifyUser -> Verify
 import Verify from './components/VerifyUser/Verify'
 
+// Route -> PageReceipt -> ViewReceipt
+import ViewReceipt from './components/PageReceipt/ViewReceipt'
+
+
 
 // Route -> PageNotFound -> NotFound
 import NotFound from './components/PageNotFound/NotFound'
@@ -171,15 +175,15 @@ const router = new VueRouter({
             name: 'login',
             component: Login
         },
-        {
-            path: '/404',
-            name: '404',
-            component: NotFound
-        },
-        {
-            path: '*',
-            redirect: '/404'
-        },
+        // {
+        //     path: '/404',
+        //     name: '404',
+        //     component: NotFound
+        // },
+        // {
+        //     path: '*',
+        //     redirect: '/404'
+        // },
         {
             path: '/carpark/zone',
             name: 'zone',
@@ -230,6 +234,12 @@ const router = new VueRouter({
             path: '/transaction/cheque',
             name: 'cheque',
             component: Cheque
+        },
+        {
+            path: '/receipt/view',
+            name: 'viewReceipt',
+            component: ViewReceipt,
+            props: (route) => ({ receiptID: route.query.receiptID})
         },
         {
             path: '/subscriber',

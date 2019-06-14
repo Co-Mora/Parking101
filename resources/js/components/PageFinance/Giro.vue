@@ -77,11 +77,19 @@
                             <td class="center">{{data.staffName || 'N/A'}}</td>
                             <td class="center">{{data.Amount || 'N/A'}}</td>
                             <td class="center">{{data.Status ? 'Success' : 'Failed'}}</td>
-                            <td class="center">
+                            <!-- <td class="center">
                               <a
                                 style="color:#3498db"
-                                :href="`/receipt/${data.path}`"
+                                :href="`/receipt/view?receiptID=${data.path}`"
                               >{{data.path ? 'Receipt' : 'N/A'}}</a>
+                            </td>-->
+                            <td class="center">
+                              <a
+                                v-if="data.path"
+                                style="color:#3498db"
+                                :href="`/receipt/view?receiptID=${data.path}`"
+                              >{{'OR' + data.carparkID + '-' + data.receiptNum}}</a>
+                              {{!data.path ? 'N/A' : ''}}
                             </td>
                           </tr>
                         </tbody>
@@ -194,13 +202,23 @@ export default {
         }
       );
     },
+    loadCollection(val) {
+      CarParkService.fetchAllData(`collection?collectionID=${val}`).then(
+        response => {
+          this.dataSource.forEach(el => {
+            if (el.RefNo == val) {
+            
+            }
+          });
+        }
+      );
+    },
     loadData(value = 1) {
       CarParkService.fetchAllData(`fund/giro?page=${value}&sort=createDate`)
         .then(response => {
           if (response.data.result.length === 0) {
             this.dataSource = [];
             this.messageSource = "No data available.";
-
           }
           this.dataSource = response.data.result;
           this.count = Math.ceil(response.data.count / this.dataSource.length);
@@ -232,6 +250,9 @@ export default {
         this.dataPath.forEach(ee => {
           if (el.RefNo == ee.collectionID) {
             el.path = ee.collectionID;
+            el.receiptNum = ee.receiptNum;
+            //this.loadCollection(ee.collectionID);
+
           }
         });
       });

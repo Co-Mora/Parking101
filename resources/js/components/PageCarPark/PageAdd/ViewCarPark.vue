@@ -209,6 +209,71 @@
                     </gmap-map>
                   </div>
                   <div class="form-group row">
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label class="col-form-label">Latitude</label>
+                          <div class="input-group">
+                            <input type="text" v-model="lat" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="col-form-label">Longitude</label>
+                          <div class="input-group">
+                            <input type="text" v-model="log" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <h4>Car Park Operation</h4>
+
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label class="col-form-label">Car Park Operation Start Date *</label>
+                          <div class="input-group">
+                            <input type="text" v-model="startDate" class="form-control">
+                            <span class="input-group-append">
+                              <button type="button" class="btn btn-default">
+                                <i class="fa fa-calendar"></i>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="col-form-label">Car Park Operation End Date *</label>
+                          <div class="input-group">
+                            <input type="text" v-model="endDate" class="form-control">
+                            <span class="input-group-append">
+                              <button type="button" class="btn btn-default">
+                                <i class="fa fa-calendar"></i>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <h4>Car Park Setting</h4>
+                  <div class="hr-line-dashed"></div>
+                   <div class="form-group row">
+                      <div class="col-sm-12">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <label class="col-form-label">Car Park Contract Type</label>
+                            <div class="input-group">
+                              <select disabled v-model="contractID" class="form-control m-b">
+                                <option>{{countryName}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <div class="form-group row">
                     <div class="col-sm-4 col-sm-offset-2">
                       <a href="/carpark" class="btn btn-default btn-sm">Cancel</a>
                     </div>
@@ -226,12 +291,12 @@
 
 
 <script>
-import NavSide from '../../NavSide';
-import NavBar from '../../NavBar';
-import MainFooter from '../../MainFooter';
+import NavSide from "../../NavSide";
+import NavBar from "../../NavBar";
+import MainFooter from "../../MainFooter";
 
-import CarParkService from '../../../services/CarParkService';
-import qs from 'qs';
+import CarParkService from "../../../services/CarParkService";
+import qs from "qs";
 
 export default {
   name: "ViewCarPark",
@@ -244,6 +309,11 @@ export default {
 
       cityID: null,
       cityName: null,
+
+      log: null,
+      lat: null,
+      startDate: null,
+      endDate: null,
 
       stateID: null,
       stateName: null,
@@ -304,8 +374,12 @@ export default {
         this.endHour = el.operationHourStop;
         this.bayCount = el.TOTALBAY;
         this.cityID = el.cityID;
+        this.phone1 = el.telephone;
+        this.phone2 = el.fax;
         this.address1 = el.addressData1;
         this.address2 = el.addressData2;
+        this.log = el.lon;
+        this.lat = el.lat;
         this.address3 = el.addressData3;
       });
       this.loadCity(this.cityID);
@@ -322,7 +396,6 @@ export default {
         this.stateName = response.data[0].name;
         this.countryID = response.data[0].countryID;
         this.loadCountry(this.countryID);
-        
       });
     },
     loadCountry(value) {

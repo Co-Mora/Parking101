@@ -12,20 +12,27 @@
             <div class="col-lg-12">
               <div class="ibox">
                 <div class="ibox-content">
-                  <div class="row"></div>
-                  <div class="table-responsive">
-                     <div v-html="receipt"></div>
-                    <div
-                      class="alert alert-primary col-sm-12 m-b-xs"
-                      v-show="errorResult == true && !messagePasscard"
-                      role="alert"
-                    >{{message}}</div>
-                    <div
-                      class="alert alert-warning col-sm-12 m-b-xs"
-                      v-if="messagePasscard"
-                      role="alert"
-                    >{{messagePasscard}}</div>
+                  <div class="row">
+                    <iframe
+                      style="margin: 0 auto; text-align: center"
+                      :src="receipt"
+                      type="application/html"
+                      frameborder="0"
+                      width="1000"
+                      height="1000"
+                      scrolling="no"
+                    ></iframe>
                   </div>
+                  <div
+                    class="alert alert-primary col-sm-12 m-b-xs"
+                    v-show="errorResult == true && !messagePasscard"
+                    role="alert"
+                  >{{message}}</div>
+                  <div
+                    class="alert alert-warning col-sm-12 m-b-xs"
+                    v-if="messagePasscard"
+                    role="alert"
+                  >{{messagePasscard}}</div>
                 </div>
               </div>
             </div>
@@ -38,21 +45,25 @@
 </template>
 
 <script>
-const NavSide = require("../NavSide.vue");
-const NavBar = require("../NavBar.vue");
-const MainFooter = require("../MainFooter.vue");
-const CarParkService = require("../../services/CarParkService");
-const SearchData = require("../../services/SearchData");
-const DateFormat = require("../../services/DateFormat");
-const LastUpdatedDate = require("../../services/LastUpdatedDate");
-const Sequence = require("../../services/Sequence");
+import NavBar from "../NavBar";
+import NavSide from "../NavSide";
+import MainFooter from "../MainFooter";
+import SearchData from "../../services/SearchData";
+import Sequence from "../../services/Sequence";
+
+import DateFormat from "../../services/DateFormat";
+import LastUpdatedDate from "../../services/LastUpdatedDate";
+import CarParkService from "../../services/CarParkService";
 
 export default {
-  name: "Passcard",
+  name: "ViewReceipt",
   data() {
     return {
       dataSource: null,
       receipt: null,
+      style: null,
+      height: null,
+      width: null,
       validated: false,
       errorResult: false,
       count: null,
@@ -69,16 +80,19 @@ export default {
   },
   methods: {
     loadData() {
-      var currentUrl = window.location.pathname;
-      let value = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
+      let value = this.$route.query.receiptID;
+
+      // var currentUrl = window.location.pathname;
+      // let value = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
       console.log(value);
       this.handlefileProcess(value);
     },
     handlefileProcess(value) {
-      CarParkService.fetchAllData(`receipt?collectionID=${value}`).then(response => {
-        this.receipt = response.data.result[0].path;
-        console.log(this.receipt)
-      });
+      CarParkService.fetchAllData(`receipt?collectionID=${value}`).then(
+        response => {
+          this.receipt = response.data.result[0].path;
+        }
+      );
     }
   },
   mounted() {
