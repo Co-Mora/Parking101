@@ -245,6 +245,7 @@ export default {
           this.messageOperator = "No data available.";
         }
       }).catch((ex) => {
+        // console.log(ex.message);
         this.$router.push({name: 'login'})
       })
     }

@@ -166,6 +166,12 @@ export default {
   mounted() {
     $("#myModalView").modal("show");
     this.loadData();
+    $(document).ready(function() {
+      $(".i-checks").iCheck({
+        checkboxClass: "icheckbox_square-green",
+        radioClass: "iradio_square-green"
+      });
+    });
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="wrapper">
-      <nav-side :classpassCardType="classpassCardType"/>
+      <nav-side :classReceipt="classReceipt" :classpassCardType="classpassCardType"/>
       <div id="page-wrapper" class="gray-bg">
         <NavBar/>
         <div class="ibox-title">
@@ -12,9 +12,20 @@
             <div class="col-lg-12">
               <div class="ibox">
                 <div class="ibox-content">
+                  
                   <div class="row">
+                    <div class="form-group">
+                      <div class="col-sm-4">
+                        <button class="btn btn-primary btn-sm" style="border-radius: 50px">Print</button>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-4" >
+                        <button class="btn btn-primary btn-sm" style="border-radius: 50px">Export PDF</button>
+                      </div>
+                    </div>
                     <iframe
-                      style="margin: 0 auto; text-align: center"
+                      style="margin: 40px auto; text-align: center"
                       :src="receipt"
                       type="application/html"
                       frameborder="0"
@@ -23,6 +34,7 @@
                       scrolling="no"
                     ></iframe>
                   </div>
+                  
                   <div
                     class="alert alert-primary col-sm-12 m-b-xs"
                     v-show="errorResult == true && !messagePasscard"
@@ -59,6 +71,7 @@ export default {
   name: "ViewReceipt",
   data() {
     return {
+      classReceipt: true,
       dataSource: null,
       receipt: null,
       style: null,

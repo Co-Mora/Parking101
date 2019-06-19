@@ -77,17 +77,11 @@
                             <td class="center">{{data.staffName || 'N/A'}}</td>
                             <td class="center">{{data.Amount || 'N/A'}}</td>
                             <td class="center">{{data.Status ? 'Success' : 'Failed'}}</td>
-                            <!-- <td class="center">
-                              <a
-                                style="color:#3498db"
-                                :href="`/receipt/view?receiptID=${data.path}`"
-                              >{{data.path ? 'Receipt' : 'N/A'}}</a>
-                            </td>-->
                             <td class="center">
                               <a
                                 v-if="data.path"
                                 style="color:#3498db"
-                                :href="`/receipt/view?receiptID=${data.path}`"
+                                :href="`/transaction/receipt/view?receiptID=${data.path}`"
                               >{{'OR' + data.carparkID + '-' + data.receiptNum}}</a>
                               {{!data.path ? 'N/A' : ''}}
                             </td>
@@ -172,9 +166,6 @@ export default {
     MainFooter
   },
   methods: {
-    handleReceipt(value) {
-      alert(value);
-    },
     paginateNum(pageNum) {
       this.loadData(pageNum);
     },
@@ -190,7 +181,6 @@ export default {
           this.dataSource = response.data.result;
           DateFormat.dateProcees(this.dataSource);
           Sequence.dataSequences(this.dataSource, 1, this.count);
-
           this.errorResult = false;
           this.message = "";
           this.result = true;
@@ -198,7 +188,7 @@ export default {
             this.errorResult = true;
             this.result = true;
             this.message = "No data available.";
-          }
+          };
         }
       );
     },
@@ -226,8 +216,8 @@ export default {
             this.count = value;
           }
           Sequence.dataSequences(this.dataSource, value, this.count);
-
           this.loadData1();
+
         })
         .catch(ex => {
           this.$router.push({ name: "login" });

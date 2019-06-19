@@ -74,12 +74,19 @@
                             <td class="center">{{data.BankCode}}</td>
                             <td class="center">{{data.ChequeNumber}}</td>
                             <td class="center">{{data.RefNo}}</td>
-                              <td class="center">{{data.remark || 'N/A'}}</td>
+                            <td class="center">{{data.remark || 'N/A'}}</td>
                             <td class="center">{{data.personnelCode || 'N/A'}}</td>
                             <td class="center">{{data.staffName || 'N/A'}}</td>
                             <td class="center">{{data.Amount || 'N/A'}}</td>
                             <td class="center">{{data.Status ? 'Success' : 'Failed'}}</td>
-                            <td class="center">{{'N/A'}}</td>
+                            <td class="center">
+                              <a
+                                v-if="data.path"
+                                style="color:#3498db"
+                                :href="`/transaction/receipt/view?receiptID=${data.path}`"
+                              >{{'OR' + data.carparkID + '-' + data.receiptNum}}</a>
+                              {{!data.path ? 'N/A' : ''}}
+                            </td>
                           </tr>
                         </tbody>
                         <tfoot>
@@ -120,12 +127,12 @@ import qs from "qs";
 import NavBar from "../NavBar";
 import NavSide from "../NavSide";
 import MainFooter from "../MainFooter";
-import SearchData from '../../services/SearchData';
-import Sequence from '../../services/Sequence';
+import SearchData from "../../services/SearchData";
+import Sequence from "../../services/Sequence";
 
-import DateFormat from '../../services/DateFormat';
-import LastUpdatedDate from '../../services/LastUpdatedDate';
-import CarParkService from '../../services/CarParkService';
+import DateFormat from "../../services/DateFormat";
+import LastUpdatedDate from "../../services/LastUpdatedDate";
+import CarParkService from "../../services/CarParkService";
 
 export default {
   name: "Cheque",
@@ -204,11 +211,32 @@ export default {
           this.loadData1();
         })
         .catch(ex => {
-          this.messageError = `${ex.message}`;
+          this.$route.push({ name: "login" });
         });
     },
-    loadData1() {
-      DateFormat.dateProcees(this.dataSource);
+     loadData1() {
+      CarParkService.fetchAllData(`receipt`).then(response => {
+        this.dataPath = response.data.result;
+        DateFormat.dateProcees(this.dataSource);
+        this.messageSource = "";
+        if (this.dataSource.length > 0) {
+          this.loadData2();
+        } else {
+          this.messageSource = "No data available.";
+        }
+      });
+    },
+    loadData2() {
+      this.dataSource.forEach(el => {
+        this.dataPath.forEach(ee => {
+          if (el.RefNo == ee.collectionID) {
+            el.path = ee.collectionID;
+            el.receiptNum = ee.receiptNum;
+            //this.loadCollection(ee.collectionID);
+
+          }
+        });
+      });
       this.messageSource = "";
       if (this.dataSource.length === 0) {
         this.messageSource = "No data available.";
@@ -217,14 +245,6 @@ export default {
   },
   mounted() {
     this.loadData();
-    axios
-      .get(
-        "https://sys2.parkaidemobile.com/3d2af816-de57-488a-8af2-59182e4cf691.html"
-      )
-      .then(function(response) {
-        // handle success
-        console.log(response);
-      });
   }
 };
 </script>

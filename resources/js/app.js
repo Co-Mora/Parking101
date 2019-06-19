@@ -236,7 +236,7 @@ const router = new VueRouter({
             component: Cheque
         },
         {
-            path: '/receipt/view',
+            path: '/transaction/receipt/view',
             name: 'viewReceipt',
             component: ViewReceipt,
             props: (route) => ({ receiptID: route.query.receiptID})

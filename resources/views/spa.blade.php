@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,9 +16,10 @@
     <link rel='stylesheet' href='/css/stylesheets/css/animate.css'>
     <link rel='stylesheet' href='/css/stylesheets/css/style.css'>
     <link rel='stylesheet' href='/css/stylesheets/css/plugins/footable/footable.core.css'>
-
-
+    <link rel='stylesheet' href='/css/stylesheets/css/plugins/iCheck/custom.css'>
+    <link rel='stylesheet' href='/css/stylesheets/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'>
 </head>
+
 <body>
     <div id="app">
         <app></app>
@@ -46,16 +48,20 @@
     <script src="/js/js/plugins/sparkline/jquery.sparkline.min.js"></script>
     <script src="/js/js/demo/sparkline-demo.js"></script>
     <!--ChartJS -->
-   	<script src="/js/js/plugins/chartJs/Chart.min.js"></script>
+    <script src="/js/js/plugins/chartJs/Chart.min.js"></script>
     <script src="/js/js/demo/chartjs-demo.js"></script>
     <!-- Toastr -->
-   	<script src="/js/js/plugins/toastr/toastr.min.js"></script>
+    <script src="/js/js/plugins/toastr/toastr.min.js"></script>
     <script src="/js/js/plugins/dataTables/datatables.min.js"></script>
     <script src="/js/js/plugins/footable/footable.all.min.js"></script>
     <script src="/js/js/plugins/select2/select2.full.min.js"></script>
     <script src="/js/js/plugins/chosen/chosen.jquery.js"></script>
     <script src="/js/js/script.js"></script>
+    <script src="/js/js/plugins/iCheck/icheck.min.js"></script>
+
     <script src="{{ mix('js/app.js') }}"></script>
 
+
 </body>
+
 </html>

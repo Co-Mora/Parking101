@@ -259,20 +259,160 @@
                   </div>
                   <h4>Car Park Setting</h4>
                   <div class="hr-line-dashed"></div>
-                   <div class="form-group row">
-                      <div class="col-sm-12">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <label class="col-form-label">Car Park Contract Type</label>
-                            <div class="input-group">
-                              <select disabled v-model="contractID" class="form-control m-b">
-                                <option>{{countryName}}</option>
-                              </select>
-                            </div>
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label class="col-form-label">Car Park Contract Type</label>
+                          <div class="input-group">
+                            <input type="text" disabled v-model="contractType" class="form-control">
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <h4>Parking License Application Commencement Date*</h4>
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 1"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Allow Half Month (1st & 16th)
+                            </label>
+                          </div>
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 0"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Allow Full Month Only (1st)
+                            </label>
+                          </div>
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 0"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Allow Any Day of Month
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="form-group row">
+                    <div class="col-sm-12">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 1"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Enable Car Park
+                            </label>
+                          </div>
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 0"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Exemption from Late Payment
+                            </label>
+                          </div>
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 0"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Exempted from SST
+                            </label>
+                          </div>
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 0"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> ParkAide Enable (Force)
+                            </label>
+                          </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="col-md-6">
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 1"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Suspend from Parking Application
+                            </label>
+                          </div>
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 0"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Exemption from Stop Billing
+                            </label>
+                          </div>
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 0"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> Car Park No SST
+                            </label>
+                          </div>
+                          <div class="i-checks">
+                            <label>
+                              <input
+                                :checked="isVerified == 0"
+                                type="checkbox"
+                                value="option1"
+                                name="a"
+                              >
+                              <i style="margin-left:10px"></i> ParkAide Enable (Optional)
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="form-group row">
                     <div class="col-sm-4 col-sm-offset-2">
                       <a href="/carpark" class="btn btn-default btn-sm">Cancel</a>
@@ -320,6 +460,8 @@ export default {
 
       countryID: null,
       countryName: null,
+
+      contractType: null,
 
       postalCode: null,
 
@@ -381,6 +523,12 @@ export default {
         this.log = el.lon;
         this.lat = el.lat;
         this.address3 = el.addressData3;
+        this.contractType =
+          el.contractType == 1
+            ? "Tenancy Deal"
+            : el.contractType == 2
+            ? "display Management Deal"
+            : "N/A";
       });
       this.loadCity(this.cityID);
     },
@@ -407,6 +555,12 @@ export default {
   mounted() {
     this.geolocate();
     this.loadData();
+    $(document).ready(function() {
+      $(".i-checks").iCheck({
+        checkboxClass: "icheckbox_square-green",
+        radioClass: "iradio_square-green"
+      });
+    });
   }
 };
 </script>

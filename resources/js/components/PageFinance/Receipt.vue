@@ -1,10 +1,10 @@
 <template>
   <div>
     <div id="wrapper">
-      <nav-side :classCash="classCash"/>
+      <nav-side classReceipt="classReceipt" :classGiro="classGiro"/>
       <div id="page-wrapper" class="gray-bg">
         <NavBar/>
-        <div class="ibox-title">Home / Transaction / ParkBills / Cash</div>
+        <div class="ibox-title">Home / Transaction / ParkBills / Official Receipt</div>
         <div class="wrapper wrapper-content animated fadeInRight">
           <div class="row">
             <div class="col-lg-12">
@@ -51,29 +51,29 @@
                         <thead>
                           <tr>
                             <th>NO.</th>
-                            <th>Date</th>
-                            <th>Transaction ID</th>
-                            <th>Ref. No.</th>
-                            <th>Remark</th>
-                            <th>Staff No.</th>
-                            <th>Staff Name</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Receipt</th>
+                            <th>Parking License</th>
+                            <th>Account Holder</th>
+                            <th>Receipt No.</th>
+                            <th>Receipt Date</th>
+                            <th>Applied Bills</th>
+                            <th>Amount (RM)</th>
+                            <th>Payment Method</th>
                           </tr>
                         </thead>
                         <tbody v-if="result == true && errorResult === false">
                           <tr v-for="(data, index) in dataSource" :key="index" class="gradeX">
                             <td class="center">{{data.count}}</td>
-                            <td class="center">{{data.createDate || 'Unknown'}}</td>
+                            <td class="center">{{data.createDate || 'N/A'}}</td>
+                            <td class="center">{{data.Date || 'N/A'}}</td>
                             <td class="center">{{data.TransId}}</td>
+                            <td class="center">{{data.Code}}</td>
                             <td class="center">{{data.RefNo}}</td>
                             <td class="center">{{data.remark || 'N/A'}}</td>
                             <td class="center">{{data.personnelCode || 'N/A'}}</td>
                             <td class="center">{{data.staffName || 'N/A'}}</td>
                             <td class="center">{{data.Amount || 'N/A'}}</td>
                             <td class="center">{{data.Status ? 'Success' : 'Failed'}}</td>
-                             <td class="center">
+                            <td class="center">
                               <a
                                 v-if="data.path"
                                 style="color:#3498db"
@@ -122,20 +122,21 @@ import NavBar from "../NavBar";
 import NavSide from "../NavSide";
 import MainFooter from "../MainFooter";
 import SearchData from "../../services/SearchData";
+import Sequence from "../../services/Sequence";
 
 import DateFormat from "../../services/DateFormat";
 import LastUpdatedDate from "../../services/LastUpdatedDate";
 import CarParkService from "../../services/CarParkService";
-import Sequence from "../../services/Sequence";
 
 export default {
-  name: "Cash",
+  name: "Receipt",
   data() {
     return {
+      classReceipt: true,
       carpark: null,
       data1: [],
       dataSource: [],
-
+      dataPath: [],
       operatorID: null,
       operators: null,
 
@@ -143,7 +144,7 @@ export default {
       messageSeason: null,
       errorResult: false,
       result: true,
-      classCash: true,
+      classGiro: true,
       searchResult: "",
       selectedFund: null,
 
@@ -172,7 +173,7 @@ export default {
         this.loadData(1);
         return 0;
       }
-      SearchData.findSearchResult(`fund/cash?search=${this.searchResult}`).then(
+      SearchData.findSearchResult(`receipt?search=${this.searchResult}`).then(
         response => {
           this.dataSource = response.data.result;
           DateFormat.dateProcees(this.dataSource);
@@ -190,10 +191,11 @@ export default {
       );
     },
     loadData(value = 1) {
-      CarParkService.fetchAllData(`fund/cash?page=${value}&sort=createDate`)
+      CarParkService.fetchAllData(`receipt?page=${value}&sort=createDate`)
         .then(response => {
           if (response.data.result.length === 0) {
             this.dataSource = [];
+            this.messageSource = "No data available.";
           }
           this.dataSource = response.data.result;
           this.count = Math.ceil(response.data.count / this.dataSource.length);
@@ -201,10 +203,11 @@ export default {
             this.count = value;
           }
           Sequence.dataSequences(this.dataSource, value, this.count);
+
           this.loadData1();
         })
         .catch(ex => {
-          this.$route.push({ name: "login" });
+          this.$router.push({ name: "login" });
         });
     },
     loadData1() {
@@ -226,7 +229,6 @@ export default {
             el.path = ee.collectionID;
             el.receiptNum = ee.receiptNum;
             //this.loadCollection(ee.collectionID);
-
           }
         });
       });

@@ -86,6 +86,14 @@
                             <td
                               class="center"
                             >{{data.Status == 1 ? 'Success': data.Status == 0 ? 'Fail' : data.Status == 6 ? 'Pending Authorization' : 'NA'}}</td>
+                            <td class="center">
+                              <a
+                                v-if="data.path"
+                                style="color:#3498db"
+                                :href="`/transaction/receipt/view?receiptID=${data.path}`"
+                              >{{'OR' + data.carparkID + '-' + data.receiptNum}}</a>
+                              {{!data.path ? 'N/A' : ''}}
+                            </td>
                           </tr>
                         </tbody>
                         <tfoot>
@@ -273,13 +281,35 @@ export default {
             this.$router.push({name: 'login'})
           });
     },
-    loadData1() {
-      DateFormat.dateProcees(this.dataSource);
+   loadData1() {
+      CarParkService.fetchAllData(`receipt`).then(response => {
+        this.dataPath = response.data.result;
+        DateFormat.dateProcees(this.dataSource);
+        this.messageSource = "";
+        if (this.dataSource.length > 0) {
+          this.loadData2();
+        } else {
+          this.messageSource = "No data available.";
+        }
+      });
+    },
+    loadData2() {
+      this.dataSource.forEach(el => {
+        this.dataPath.forEach(ee => {
+          if (el.RefNo == ee.collectionID) {
+            el.path = ee.collectionID;
+            el.receiptNum = ee.receiptNum;
+            //this.loadCollection(ee.collectionID);
+
+          }
+        });
+      });
       this.messageSource = "";
       if (this.dataSource.length === 0) {
         this.messageSource = "No data available.";
       }
-    },
+    }
+    
   },
   mounted() {
     this.loadData();
