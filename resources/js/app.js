@@ -146,6 +146,12 @@ import NotFound from './components/PageNotFound/NotFound'
 
 
 
+// Route -> PageSeason -> SyncSeason
+import SyncSeason from './components/PageSeason/SyncSeason'
+
+
+
+
 const router = new VueRouter({
     mode: 'history',
     routes: [
@@ -271,6 +277,11 @@ const router = new VueRouter({
             path: '/verify/:id?',
             name: 'verify',
             component: Verify
+        },
+        {
+            path: '/season',
+            name: 'syncseason',
+            component: SyncSeason
         },
     ],
 });

@@ -48,6 +48,18 @@
               </li>
             </ul>
           </li>
+               <li :class="{ active: season }">
+            <a :class="{ active: classSeason }" href="#">
+              <i class="fa fa-group"></i>
+              <span class="nav-label">Season</span>
+              <span class="fa arrow"></span>
+            </a>
+            <ul class="nav nav-second-level collapse">
+              <li :class="{ active: classSeason }">
+                <a href="/season">Season</a>
+              </li>
+            </ul>
+          </li>
            <li :class="{ active: operator }">
             <a :class="{ active: classOperator }" href="#">
               <i class="fa fa-suitcase"></i>
@@ -362,7 +374,8 @@ export default {
     "classpassCardType",
     "classpassCardAll",
     'classOperator',
-    "classSubscriber"
+    "classSubscriber",
+    "classSeason"
   ],
 
   data() {
@@ -373,6 +386,7 @@ export default {
       wheelMaster: null,
       location: null,
       passcard: null,
+      season: null,
       finance: null,
       subscriber: null,
       operator: null,
@@ -396,6 +410,9 @@ export default {
     }
   },
   mounted() {
+    if(this.classSeason) {
+      this.season = true;
+    }
     if(this.classSubscriber) {
       this.subscriber = true;
     }

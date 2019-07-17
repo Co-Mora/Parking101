@@ -203,8 +203,8 @@ export default {
             this.count = value;
           }
           Sequence.dataSequences(this.dataSource, value, this.count);
-
           this.loadData1();
+
         })
         .catch(ex => {
           this.$router.push({ name: "login" });
@@ -222,12 +222,14 @@ export default {
         }
       });
     },
+
     loadData2() {
       this.dataSource.forEach(el => {
         this.dataPath.forEach(ee => {
           if (el.RefNo == ee.collectionID) {
             el.path = ee.collectionID;
             el.receiptNum = ee.receiptNum;
+            el.carparkID = ee.carparkID;
             //this.loadCollection(ee.collectionID);
           }
         });

@@ -1,9 +1,9 @@
 <template>
   <div>
     <div id="wrapper">
-      <nav-side :classFinance="classFinance"/>
+      <nav-side :classFinance="classFinance" />
       <div id="page-wrapper" class="gray-bg">
-        <NavBar/>
+        <NavBar />
         <div class="ibox-title">
           <p>Home / Transaction / ParkBills / Online Banking</p>
         </div>
@@ -34,7 +34,7 @@
                           placeholder="Search"
                           type="text"
                           class="form-control form-control-sm"
-                        >
+                        />
                         <span class="input-group-append">
                           <button
                             type="button"
@@ -66,6 +66,7 @@
                             <th>Currency</th>
                             <th>Amount</th>
                             <th>Status</th>
+                            <th>Receipt</th>
                           </tr>
                         </thead>
                         <tbody v-if="result == true && errorResult === false">
@@ -91,7 +92,7 @@
                                 v-if="data.path"
                                 style="color:#3498db"
                                 :href="`/transaction/receipt/view?receiptID=${data.path}`"
-                              >{{'OR' + data.carparkID + '-' + data.receiptNum}}</a>
+                              >{{'OR' + data.carparkCode + '-' + data.receiptNum}}</a>
                               {{!data.path ? 'N/A' : ''}}
                             </td>
                           </tr>
@@ -122,7 +123,7 @@
             </div>
           </div>
         </div>
-        <MainFooter/>
+        <MainFooter />
       </div>
     </div>
   </div>
@@ -134,18 +135,19 @@ import qs from "qs";
 import NavBar from "../NavBar";
 import NavSide from "../NavSide";
 import MainFooter from "../MainFooter";
-import SearchData from '../../services/SearchData';
+import SearchData from "../../services/SearchData";
 
-import DateFormat from '../../services/DateFormat';
-import LastUpdatedDate from '../../services/LastUpdatedDate';
-import CarParkService from '../../services/CarParkService';
-import Sequence from '../../services/Sequence';
+import DateFormat from "../../services/DateFormat";
+import LastUpdatedDate from "../../services/LastUpdatedDate";
+import CarParkService from "../../services/CarParkService";
+import Sequence from "../../services/Sequence";
 
 export default {
   name: "Fund",
   data() {
     return {
       carpark: null,
+      carparkID: null,
       data1: [],
       dataSource: [],
 
@@ -278,10 +280,10 @@ export default {
           this.loadData1();
         })
         .catch(ex => {
-            this.$router.push({name: 'login'})
-          });
+          this.$router.push({ name: "login" });
+        });
     },
-   loadData1() {
+    loadData1() {
       CarParkService.fetchAllData(`receipt`).then(response => {
         this.dataPath = response.data.result;
         DateFormat.dateProcees(this.dataSource);
@@ -299,8 +301,8 @@ export default {
           if (el.RefNo == ee.collectionID) {
             el.path = ee.collectionID;
             el.receiptNum = ee.receiptNum;
-            //this.loadCollection(ee.collectionID);
-
+            el.carparkID = ee.carparkID;
+            // this.loadCarPark(ee.carparkID);
           }
         });
       });
@@ -308,8 +310,23 @@ export default {
       if (this.dataSource.length === 0) {
         this.messageSource = "No data available.";
       }
-    }
-    
+    },
+    // loadCarPark(val) {
+    //   CarParkService.fetchAllData(`carpark?carparkID=${val}`).then(response => {
+    //     if (response.data.result.length !== 0) {
+    //       response.data.result.forEach(el => {
+    //         this.dataSource.forEach(ell => {
+    //           this.dataPath.forEach(ee => {
+    //             if (ell.RefNo == ee.collectionID) {
+    //               console.log(el.carparkCode);
+    //               ell.carparkCode = el.carparkCode;
+    //             }
+    //           });
+    //         });
+    //       });
+    //     }
+    //   });
+    // }
   },
   mounted() {
     this.loadData();
