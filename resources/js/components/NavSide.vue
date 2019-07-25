@@ -337,6 +337,9 @@
 </template>
 
 <script>
+
+
+import buildName from '../libv/core';
 export default {
   name: "NavSide",
   props: [
@@ -410,6 +413,7 @@ export default {
     }
   },
   mounted() {
+
     if(this.classSeason) {
       this.season = true;
     }

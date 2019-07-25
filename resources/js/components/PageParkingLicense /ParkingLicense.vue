@@ -1,15 +1,15 @@
 <template>
   <div>
-    <ViewPasscard
+    <!-- <ViewPasscard
       v-if="isBoxOpen"
       :isBoxOpen="isBoxOpen"
       @clicked-cancel="modalFunCancel"
       :dataOperator="dataOperator"
-    />
+    />-->
     <div id="wrapper">
-      <nav-side :classpassCardAll="classpassCardAll"/>
+      <nav-side :classpassCardAll="classpassCardAll" />
       <div id="page-wrapper" class="gray-bg">
-        <NavBar/>
+        <NavBar />
         <div class="ibox-title">
           <p>Home / Parking License / Parking License / Parking License Subscription</p>
         </div>
@@ -41,7 +41,7 @@
                           placeholder="Search"
                           type="text"
                           class="form-control form-control-sm"
-                        >
+                        />
                         <span class="input-group-append">
                           <button
                             type="button"
@@ -87,6 +87,17 @@
                           :value="car.id"
                           :key="index"
                         >{{car.carparkCode + ' - '}}{{car.name}}</option>
+                      </chosen-select>
+                    </div>
+                     <div class="col-sm-12 m-b-xs" style="margin-bottom:30px;">
+                      <chosen-select
+                        v-model="companyID"
+                        data-vv-as="carpark"
+                        class="chosen-select form-control m-b"
+                        v-on:input="onChangeCompany(companyID)"
+                      >
+                        <option>Company</option>
+                        <option>Personal</option>
                       </chosen-select>
                     </div>
                   </div>
@@ -137,22 +148,26 @@
             </div>
           </div>
         </div>
-        <MainFooter/>
+        <MainFooter />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-const NavSide = require("../NavSide.vue");
-const NavBar = require("../NavBar.vue");
-const MainFooter = require("../MainFooter.vue");
-const ViewPasscard = require("./ViewPasscard.vue");
-const CarParkService = require("../../services/CarParkService");
-const SearchData = require("../../services/SearchData");
-const DateFormat = require("../../services/DateFormat");
-const LastUpdatedDate = require("../../services/LastUpdatedDate");
-const Sequence = require("../../services/Sequence");
+
+import NavBar from "../NavBar";
+import NavSide from "../NavSide";
+import MainFooter from "../MainFooter";
+import SearchData from "../../services/SearchData";
+
+import DateFormat from "../../services/DateFormat";
+
+import DateFormat from "../../services/DateFormat";
+import LastUpdatedDate from "../../services/LastUpdatedDate";
+import CarParkService from "../../services/CarParkService";
+import Sequence from "../../services/Sequence";
+
 
 export default {
   name: "ParkingLicense",
@@ -160,6 +175,9 @@ export default {
     return {
       carpark: "",
       carparkID: "",
+      companyID: "",
+      customers: "",
+      customerID: null,
       dataSource: null,
       classpassCardAll: true,
       dataOperator: [],
@@ -178,8 +196,8 @@ export default {
   components: {
     NavSide,
     NavBar,
-    MainFooter,
-    ViewPasscard
+    MainFooter
+    // ViewPasscard
   },
   methods: {
     paginateNum(pageNum) {
@@ -191,6 +209,9 @@ export default {
     onChangeCarPark: function(val) {
       this.loadData(1);
     },
+    onChangeCompany: function(val) {
+      this.filterCompany(val);
+    },
     modalFunCancel(value) {
       this.isBoxOpen = value;
     },
@@ -201,9 +222,7 @@ export default {
         this.loadData();
       }
       SearchData.findSearchResult(
-        `operator/${this.operatorID}/carpark/${
-          this.carparkID
-        }/passcard?search=${this.searchResult}`
+        `operator/${this.operatorID}/carpark/${this.carparkID}/passcard?search=${this.searchResult}`
       ).then(response => {
         this.dataSource = response.data.result;
         DateFormat.dateProcees(this.dataSource);
@@ -230,7 +249,7 @@ export default {
     },
     filterOperator() {
       CarParkService.fetchAllData(`operator`)
-        .then(response => {
+        .then(response => { 
           this.operators = response.data;
           this.operatorID = response.data[1].id;
           this.filterCarPark();
@@ -240,27 +259,32 @@ export default {
         });
     },
     filterCarPark() {
-      CarParkService.fetchAllData(`operator/${this.operatorID}/carpark?sort=createDate`).then(
-        response => {
-          this.carpark = response.data.result;
-          this.carparkID = response.data.result[0].id;
-          if (this.carpark.length === 0) {
-            this.messageParking = "No data available.";
-          }
-          DateFormat.dateProcees(this.carpark);
-          LastUpdatedDate.dataSorting(this.carpark);
-          this.loadData();
+      CarParkService.fetchAllData(
+        `operator/${this.operatorID}/carpark?sort=createDate`
+      ).then(response => {
+        this.carpark = response.data.result;
+        this.carparkID = response.data.result[0].id;
+        if (this.carpark.length === 0) {
+          this.messageParking = "No data available.";
         }
-      );
+        DateFormat.dateProcees(this.carpark);
+        LastUpdatedDate.dataSorting(this.carpark);
+        this.loadData();
+      });
+    },
+    filterCompany(val) {
+        CarParkService.fetchAllData(`operator/${this.operatorID}/customer?carparkID=${this.carparkID}&isCompany=${val}`)
+        .then(response => {
+          this.customers = response.data.result;
+          this.customerID = response.data.result[0].id;
+          this.loadData();
+        })
     },
     loadData(value = 1) {
       CarParkService.fetchAllData(
-        `operator/${this.operatorID}/carpark/${
-          this.carparkID
-        }/passcard?page=${value}&sort=createDate`
+        `operator/${this.operatorID}/carpark/${this.carparkID}/license?isCompany=${this.companyID}&customerID=${this.customerID}&page=${value}&sort=createDate`
       ).then(response => {
         this.dataSource = response.data.result;
-        this.loadData1();
         DateFormat.dateProcees(this.dataSource);
         this.count = Math.ceil(response.data.count / 100);
         if (this.dataSource.length < 100) {
@@ -274,22 +298,11 @@ export default {
         }
       });
     },
-    loadData1() {
-      CarParkService.fetchAllData(`operator/${this.operatorID}/passtype`).then(
-        response => {
-          this.dataSource.forEach(el => {
-            response.data.forEach(ee => {
-              if (el.passtypeID == ee.id) {
-                el.passtypeID = ee.name;
-              }
-            });
-          });
-        }
-      );
-    }
   },
   mounted() {
     this.filterOperator();
+
   }
 };
 </script>
+

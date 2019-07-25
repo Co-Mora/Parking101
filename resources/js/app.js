@@ -149,7 +149,8 @@ import NotFound from './components/PageNotFound/NotFound'
 // Route -> PageSeason -> SyncSeason
 import SyncSeason from './components/PageSeason/SyncSeason'
 
-
+// Route -> PageParkingLicence -> ParkingLicence
+// import ParkingLicense from './components/PageParkingLicense/ParkingLicense'
 
 
 const router = new VueRouter({
@@ -283,6 +284,9 @@ const router = new VueRouter({
             name: 'syncseason',
             component: SyncSeason
         },
+     
+
+        
     ],
 });
 

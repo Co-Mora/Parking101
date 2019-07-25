@@ -3,7 +3,7 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
       <div>
         <div>
-          <img alt="image" class="-square-full" :width="100" :src="Image">
+          <img alt="image" class="-square-full" :width="100" :src="Image" />
 
           <h1 class="logo-name"></h1>
         </div>
@@ -16,7 +16,7 @@
             class="form-control"
             placeholder="Email Address"
             required
-          >
+          />
         </div>
         <div class="form-group">
           <input
@@ -25,7 +25,7 @@
             class="form-control"
             placeholder="Password"
             required
-          >
+          />
         </div>
         <button class="btn btn-primary block full-width m-b" @click="loadData">Login</button>
         <p>{{message}}</p>
@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       Image,
-
       token: null,
       email: null,
       password: null,
