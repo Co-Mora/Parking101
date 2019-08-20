@@ -150,12 +150,17 @@ import NotFound from './components/PageNotFound/NotFound'
 import SyncSeason from './components/PageSeason/SyncSeason'
 
 // Route -> PageParkingLicence -> ParkingLicence
-// import ParkingLicense from './components/PageParkingLicense/ParkingLicense'
+import ParkingLicense from './components/PageParkingLicense/ParkingLicense'
 
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
+        {
+            path: '/license',
+            name: 'license',
+            component: ParkingLicense
+        },
         {
             path: '/',
             name: 'home',

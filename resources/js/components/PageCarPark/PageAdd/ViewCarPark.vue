@@ -550,11 +550,18 @@ export default {
       CarParkService.fetchAllData(`country/${value}`).then(response => {
         this.countryName = response.data[0].name;
       });
+    },
+    loadAddress() {
+      CarParkService.fetchAllData(`address/${this.address1}`).then(response => {
+        console.log(JSON.parse(response));
+      });
     }
   },
   mounted() {
     this.geolocate();
     this.loadData();
+    this.loadAddress();
+    
     $(document).ready(function() {
       $(".i-checks").iCheck({
         checkboxClass: "icheckbox_square-green",
