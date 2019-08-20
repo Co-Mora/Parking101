@@ -1,7 +1,3 @@
-import CarParkService from '../services/CarParkService';
-
-
-
 interface CarPark {
 
     operatorID?: string;
@@ -23,7 +19,7 @@ export class Core implements CarPark {
     }
 
     loadData(config: CarPark) {
-        CarParkService.fetchAllData(`operator/${config.operatorID}/`);
+        
     }
 
     

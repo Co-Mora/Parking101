@@ -89,7 +89,7 @@
                       <td class="center">{{car.bay}}</td>
                       <td class="center">
                         <span
-                          :class="{ 'label label-primary': car.isEnable == 1, 'label-danger': car.isEnable == 0 }"
+                          :class="{ 'label label-primary': car.isEnable == 1, 'label-danger': car.isEnable == 0, 'label-danger': car.isEnable == null }"
                           class="float-left label"
                         >{{car.isEnable == 1 ? 'Enable' : 'Disable'}}</span>
                       </td>

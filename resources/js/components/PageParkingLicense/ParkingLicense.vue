@@ -1,13 +1,7 @@
 <template>
   <div>
-    <!-- <ViewPasscard
-      v-if="isBoxOpen"
-      :isBoxOpen="isBoxOpen"
-      @clicked-cancel="modalFunCancel"
-      :dataOperator="dataOperator"
-    />-->
     <div id="wrapper">
-      <nav-side :classpassCardAll="classpassCardAll" />
+      <nav-side :classParking="classParking" />
       <div id="page-wrapper" class="gray-bg">
         <NavBar />
         <div class="ibox-title">
@@ -51,7 +45,7 @@
                         </span>
                       </div>
                     </div>
-                    <div class="col-sm-12 m-b-xs" style="margin-bottom:10px;">
+                    <div class="col-sm-12 m-b-xs" style="margin-bottom:30px;">
                       <chosen-select
                         v-model="operatorID"
                         class="chosen-select form-control m-b"
@@ -96,8 +90,28 @@
                         class="chosen-select form-control m-b"
                         v-on:input="onChangeCompany(companyID)"
                       >
-                        <option>Company</option>
-                        <option>Personal</option>
+                        <option value="1">Company</option>
+                        <option value="0">Personal</option>
+                      </chosen-select>
+                    </div>
+                    <div class="col-sm-12 m-b-xs" style="margin-bottom:30px;">
+                      <chosen-select
+                        v-model="customerID"
+                        data-vv-as="customers"
+                        class="chosen-select form-control m-b"
+                        v-on:input="onChangeCustomer(customerID)"
+                      >
+                        <option
+                          :disabled="customerID && customers.length > 0"
+                          selected
+                          value="null"
+                          key="null"
+                        >{{!messagePasscard ? 'Please Select Customer Name' : 'Please Select Customer Name'}}</option>
+                        <option
+                          v-for="(cus, index) in customers"
+                          :value="cus.id"
+                          :key="index"
+                        >{{cus.name}}</option>
                       </chosen-select>
                     </div>
                   </div>
@@ -106,29 +120,22 @@
                       <thead>
                         <tr>
                           <th data-hide="phone,tablet">No.</th>
-                          <th data-hide="phone,tablet">Passcard Number</th>
-                          <th data-hide="phone,tablet">Passcard Type</th>
-                          <th data-hide="phone,tablet">Movement</th>
-                          <th data-hide="phone,tablet">Condition</th>
-                          <th data-hide="phone,tablet">Is Blocked</th>
-                          <th data-hide="phone,tablet">Subscription</th>
+                          <th data-hide="phone,tablet">licenseOperatorNum</th>
+                          <th data-hide="phone,tablet">addressOpt1</th>
+                          <th data-hide="phone,tablet">addressOpt2</th>
+                          <th data-hide="phone,tablet">addressOpt3</th>
+                          <th data-hide="phone,tablet">create Date</th>
                         </tr>
                       </thead>
                       <tbody v-if="result == true && errorResult === false">
                         <tr v-for="(data, index) in dataSource" :key="index" class="gradeU">
                           <td class="center">{{data.count}}</td>
-                          <td class="center">
-                            <a
-                              style="color:#3498db"
-                              data-toggle="modal"
-                              data-target="#myModalUpdate"
-                              @click="viewPasscard(data.id)"
-                            >{{data.sku || 'NA'}}</a>
-                          </td>
-                          <td class="center">{{data.passtypeID || 'NA'}}</td>
-                          <td class="center">{{data.movement || 'NA'}}</td>
-                          <td class="center">{{data.conditions || 'NA'}}</td>
-                          <td class="center">{{data.isBlocked == 0 ? 'Not Blocked' : 'Blocked'}}</td>
+                          <td class="center">{{data.licenseOperatorNum || 'NA'}}</td>
+                          <td class="center">{{data.addressOpt1 || 'NA'}}</td>
+                          <td class="center">{{data.addressOpt2 || 'NA'}}</td>
+                          <td class="center">{{data.addressOpt3 || 'NA'}}</td>
+                          <td class="center">{{data.createDate || 'NA'}}</td>
+
                         </tr>
                       </tbody>
                     </table>
@@ -162,8 +169,6 @@ import MainFooter from "../MainFooter";
 import SearchData from "../../services/SearchData";
 
 import DateFormat from "../../services/DateFormat";
-
-import DateFormat from "../../services/DateFormat";
 import LastUpdatedDate from "../../services/LastUpdatedDate";
 import CarParkService from "../../services/CarParkService";
 import Sequence from "../../services/Sequence";
@@ -179,7 +184,7 @@ export default {
       customers: "",
       customerID: null,
       dataSource: null,
-      classpassCardAll: true,
+      classParking: true,
       dataOperator: [],
       operatorID: null,
       operators: null,
@@ -197,14 +202,16 @@ export default {
     NavSide,
     NavBar,
     MainFooter
-    // ViewPasscard
   },
   methods: {
     paginateNum(pageNum) {
       this.loadData(pageNum);
     },
+    onChangeCustomer: function(val) {
+        this.loadData();
+    },
     onChangeOperator: function(val) {
-      this.filterCarPark(1);
+      this.filterCarPark();
     },
     onChangeCarPark: function(val) {
       this.loadData(1);
@@ -222,7 +229,7 @@ export default {
         this.loadData();
       }
       SearchData.findSearchResult(
-        `operator/${this.operatorID}/carpark/${this.carparkID}/passcard?search=${this.searchResult}`
+        `operator/${this.operatorID}/carpark/${this.carparkID}/license?isCompany=${this.companyID}&customerID=${this.customerID}?search=${this.searchResult}`
       ).then(response => {
         this.dataSource = response.data.result;
         DateFormat.dateProcees(this.dataSource);
@@ -250,13 +257,13 @@ export default {
     filterOperator() {
       CarParkService.fetchAllData(`operator`)
         .then(response => { 
-          this.operators = response.data;
-          this.operatorID = response.data[1].id;
+          this.operators = response.data.result;
+          this.operatorID = response.data.result[0].id;
           this.filterCarPark();
         })
-        .catch(ex => {
-          window.location.href = "/login";
-        });
+        // .catch(ex => {
+        //   window.location.href = "/login";
+        // });
     },
     filterCarPark() {
       CarParkService.fetchAllData(

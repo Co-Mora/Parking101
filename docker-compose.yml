@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  parking101:
+    container_name: parking_101
+    command: "php artisan serve"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - app/node_modules
+      - .:/app

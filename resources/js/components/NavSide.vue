@@ -122,21 +122,21 @@
               </li>-->
             </ul>
           </li>
-          <li :class="{ active: '' }">
-            <a :class="{ active: '' }" href="#">
+          <li :class="{ active: parking }">
+            <a :class="{ active: parking }" href="#">
               <i class="fa fa-address-card"></i>
               <span class="nav-label">Parking License</span>
               <span class="fa arrow"></span>
             </a>
             <ul class="nav nav-second-level collapse">
-              <li :class="{ active: '' }">
+              <li :class="{ active: parking }">
                 <a>
                   Parking License
                   <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-third-level">
-                  <li :class="{ active: '' }">
-                    <a href="/">Parking License Subsccription</a>
+                  <li :class="{ active: classParking }">
+                    <a href="/license">Parking License Subsccription</a>
                   </li>
                 </ul>
               </li>
@@ -339,7 +339,6 @@
 <script>
 
 
-import buildName from '../libv/core';
 export default {
   name: "NavSide",
   props: [
@@ -376,6 +375,7 @@ export default {
     "classUsers",
     "classpassCardType",
     "classpassCardAll",
+    "classParking",
     'classOperator',
     "classSubscriber",
     "classSeason"
@@ -391,6 +391,7 @@ export default {
       passcard: null,
       season: null,
       finance: null,
+      parking: null,
       subscriber: null,
       operator: null,
       gateMaster: null,
@@ -413,7 +414,9 @@ export default {
     }
   },
   mounted() {
-
+    if(this.classParking) {
+      this.parking = true;
+    }
     if(this.classSeason) {
       this.season = true;
     }
