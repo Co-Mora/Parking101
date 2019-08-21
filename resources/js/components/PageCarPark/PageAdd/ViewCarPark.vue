@@ -555,7 +555,25 @@ export default {
       CarParkService.fetchAllData(`address/${this.address1}`).then(response => {
         console.log(JSON.parse(response));
       });
+    },
+    loadSeasonSetting() {
+      CarParkService.fetchAllData(`carpark/${this.carparkID}/seasonSetting`).then(response => {
+
+      });
+    },
+    loadBilingSetting() {
+      CarParkService.fetchAllData(`carpark/${this.carparkID}/finance`).then(response => {
+      });
+    },
+
+    loadBillingTerms() {
+       CarParkService.fetchAllData(`carpark/${this.carparkID}/tnc`).then(response => {
+
+      });
     }
+
+    
+  
   },
   mounted() {
     this.geolocate();
