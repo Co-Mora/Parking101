@@ -100,6 +100,7 @@ import MainChart from './components/MainChart'
 import Zone from './components/PageCarPark/Zone'
 import Street from './components/PageCarPark/Street'
 import Bay from './components/PageCarPark/Bay'
+import CarParkProduct from './components/PageCarPark/CarParkProduct'
 
 // Route -> PageAdd -> ViewCarPark
 import ViewCarPark from './components/PageCarPark/PageAdd/ViewCarPark'
@@ -200,6 +201,11 @@ const router = new VueRouter({
             path: '/carpark/zone',
             name: 'zone',
             component: Zone
+        },
+        {
+            path: '/carpark/product',
+            name: 'product',
+            component: CarParkProduct
         },
         {
             path: '/carpark/street',

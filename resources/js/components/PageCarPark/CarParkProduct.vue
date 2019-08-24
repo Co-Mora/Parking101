@@ -1,403 +1,324 @@
+
 <template>
-  <div v-show="isLoggedIn">
-    <div class="modal inmodal" id="myModalUpdate" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title">{{zoneName}}</h4>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Street Name</label>
-              <input type=" text" v-model="name" placeholder="Enter Street Name" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Image Name</label>
-              <input type="file" ref="file" @change="handleFileUpload()"  class="form-control">
-              <img style="width: 10%" :src="image" />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" @click="updateStreet(streetID)" :disabled="validated == true" class="btn btn-primary">Update changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title">{{zoneName}}</h4>
-          </div>
-          <div class="modal-body">
-            <div class="table-responsive">
-              <table class="table table-striped table-bordered table-hover dataTables-example">
-                <thead>
-                <tr>
-                  <th data-hide="phone,tablet">image</th>
-                  <th data-hide="phone,tablet">Carpark Name</th>
-                  <th data-hide="phone,tablet">name</th>
-                  <th data-hide="phone,tablet">Delete</th>
-                  <th data-hide="phone,tablet">Update</th>
-                </tr>
-                </thead>
-                <tbody>
-                <span v-show="selectedStreet == 0" style="font-size: 20px;">{{message}}</span>
-                <tr v-for="street in selectedStreet" :key="street" class="gradeX">
-                  <td class="center">
-                    <a :href="street.image"><img style="width: 10%" :src="street.image"></a>
-                  </td>
-                  <td class="center">{{zoneName || 'Unknown'}}</td>
-                  <td class="center">{{street.name || 'Unknown'}}</td>
-                  <td><button class="pull-right btn btn-danger btn-sm" :value="street.id" @click="deleteStreet(street.id)">Delete</button></td>
-                  <td>
-                    <button class="pull-right btn btn-primary btn-sm" :value="street.id" @click="viewStreetUpdate(street.id)" data-toggle="modal" data-target="#myModalUpdate">Update</button>
-                  </td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                  <td colspan="5">
-                    <ul class="pagination float-right"></ul>
-                  </td>
-                </tr>
-                </tfoot>
-              </table>
-            </div>
-
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div>
     <div id="wrapper">
-      <nav-side :classProduct="classProduct"/>
+      <nav-side :classProduct="classProduct" />
       <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-          <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-            </div>
-            <ul class="nav navbar-top-links navbar-right">
-              <li>
-                <span class="m-r-sm text-muted welcome-message">Welcome to Carpark Aide.</span>
-              </li>
-
-              <li>
-                <a @click="logout" href="/login">
-                  <i class="fa fa-sign-out"></i> Log out
-                </a>
-              </li>
-            </ul>
-
-          </nav>
-        </div>
+        <NavBar />
         <div class="ibox-title">
-          <p>Home / Car Park / Product</p>
+          <p>Home / Car Park / Car Park Product</p>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
           <div class="row">
             <div class="col-lg-12">
-              <div class="ibox ">
+              <div class="ibox-content">
                 <div class="ibox-content">
                   <div class="row">
-                    <div class="input-group" style="margin: 0 0 20px 16px">
-                      <a href="/carparks/street/add" class="btn btn-rounded btn-w-m btn-outline-primary">Create New Car Park Product</a>
+                    <div class="col-lg-6">
+                      <paginate
+                        v-show="!messageCarPark"
+                        v-model="page"
+                        :page-count="count"
+                        :page-range="3"
+                        :margin-pages="2"
+                        :click-handler="paginateNum"
+                        :prev-text="'Prev'"
+                        :next-text="'Next'"
+                        :container-class="'pagination'"
+                        :page-class="'page-item'"
+                      ></paginate>
                     </div>
-                    <div class="col-sm-9 m-b-xs">
-                      <select v-model="carparkID" class="form-control m-b" @change="filterZone">
-                        <option disabled value="null" key="null">Please Select Carpark Name</option>
-                        <option v-for="car in carpark" :value="car.id" :key="car">{{car.name}}</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-9 m-b-xs">
-                      <select v-model="zoneID" class="form-control m-b" @change="filterZoneByStreet">
-                        <option disabled  selected value="null" key="null">Please Select Zone Name</option>
-                        <option v-for="z in zone" :value="z.id" :key="z">{{z.name}}</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-3">
+
+                    <div class="col-sm-6">
                       <div class="input-group" style="margin-bottom: 20px">
-                        <input v-model="searchResult" @change="getSearchResult" placeholder="Search" type="text" class="form-control form-control-sm"><span class="input-group-append">
-                                      <button type="button"  @click="getSearchResult()" class="btn btn-sm btn-primary">Search</button></span>
+                        <input
+                          v-model="searchResult"
+                          @change="getSearchResult"
+                          placeholder="Search"
+                          type="text"
+                          class="form-control form-control-sm"
+                        />
+                        <span class="input-group-append">
+                          <button
+                            type="button"
+                            @click="getSearchResult()"
+                            class="btn btn-sm btn-success"
+                          >Search</button>
+                        </span>
                       </div>
+                    </div>
+                    <div class="col-sm-12 m-b-xs" style="margin-bottom:10px;">
+                      <chosen-select
+                        v-model="operatorID"
+                        class="chosen-select form-control m-b"
+                        v-if="operatorID && operators.length > 0"
+                        data-vv-as="operatorID"
+                        ref="input"
+                        v-on:input="onChangeOperator(operatorID)"
+                      >
+                        <option disabled :value="null" key="null">{{title}}</option>
+                        <option
+                          v-for="(op, index) in operators"
+                          :value="op.id"
+                          :key="index"
+                        >{{op.name}}</option>
+                      </chosen-select>
+                    </div>
+                    <div class="col-sm-12 m-b-xs" style="margin-bottom:10px;">
+                      <chosen-select
+                        v-model="carparkID"
+                        data-vv-as="carparkID"
+                        class="chosen-select form-control m-b"
+                        v-on:input="onChangeCarPark(carparkID)"
+                      >
+                        <option
+                          :disabled="carparkID && carpark.length > 0"
+                          selected
+                          value="null"
+                          key="null"
+                        >{{!messageCarPark ? 'Please Select Car Park Name' : 'Please Select Car Park Name'}}</option>
+                        <option
+                          v-for="(car, index) in carpark"
+                          :value="car.id"
+                          :key="index"
+                        >{{car.carparkCode + ' - '}}{{car.name}}</option>
+                      </chosen-select>
+                    </div>
+                    <div class="col-sm-12 m-b-xs" style="margin-bottom:30px;">
+                      <chosen-select
+                        v-model="zoneID"
+                        data-vv-as="zoneID"
+                        class="chosen-select form-control m-b"
+                        v-on:input="onChangeZone(zoneID)"
+                      >
+                        <option
+                          :disabled="zoneID && zones.length > 0"
+                          selected
+                          value="null"
+                          key="null"
+                        >{{!messageCarPark ? 'Please Select Zone Name' : 'Please Select Zone Name'}}</option>
+                        <option
+                          v-for="(zone, index) in zones"
+                          :value="zone.id"
+                          :key="index"
+                        >{{zone.name}}</option>
+                      </chosen-select>
                     </div>
                   </div>
                   <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <table v-show="!messageCarPark && !message" class="table table-bordered">
                       <thead>
-                      <tr>
-                        <th data-hide="phone,tablet">id(s)</th>
-                        <th data-hide="phone,tablet">image</th>
-                        <th data-hide="phone,tablet">Zone Name</th>
-                        <th data-hide="phone,tablet">Street Name</th>
-                      </tr>
+                        <tr>
+                          <th>No.</th>
+                          <th>Car Park</th>
+                          <th>Zone</th>
+                          <th>Product Name</th>
+                          <th>Tenant Type</th>
+                          <th>Bay Type</th>
+                          <th>Alloc. Bay</th>
+                          <th>Used Bay</th>
+                          <th>Avai. Bay</th>
+                          <th>Is Enable</th>
+                          <th>Is Public</th>
+                          <th>Fees</th>
+                        </tr>
                       </thead>
-                      <tbody>
-                      <div class="alert alert-primary col-sm-12 m-b-xs" v-show="errorResult === true" role="alert">{{message}}</div>
-                      <tr v-for="pro in product" :key="pro" class="gradeX"  v-if="result === true && errorResult === false">
-                        <td class="center"><a data-toggle="modal" data-target="#myModal5" @click="viewStreet(pro.id)">{{pro.id}}</a></td>
-                        <td class="center"><a :href="pro.image"><img style="width: 10%" :src="pro.image"></a></td>
-                        <td class="center">{{zoneName || 'Unknown'}}</td>
-                        <td class="center">{{pro.name || 'Unknown'}}</td>
-                      </tr>
+                      <tbody v-if="result == true && errorResult === false">
+                        <tr v-for="(carpark, index) in carparkProduct" :key="index" class="gradeX">
+                          <td class="center">{{carpark.count}}</td>
+                          <td class="center">{{'NA'}}</td>
+                          <td class="center">{{'NA'}}</td>
+                          <td class="center">
+                            <a
+                              style="color:#3498db"
+                              :href="`/carpark/product/view?carparkID=${carparkID}&zoneID=${zoneID}&seasonID=${carpark.id}`"
+                            >{{carpark.name}}</a>
+                          </td>
+                          <td class="center">{{carpark.isTenant == 1 ? 'T' : 'NT'}}</td>
+                          <td
+                            class="center"
+                          >{{carpark.bayType == 1 ? 'NR' : carpark.bayType == 2 ? 'R' : carpark.bayType == 3 ? 'TR' : 'M' }}</td>
+                          <td class="center">{{carpark.TOTALBAY || "0"}}</td>
+                          <td class="center">{{"0"}}</td>
+                          <td class="center">{{"0"}}</td>
+                          <td class="center">
+                            <span
+                              :class="{ 'label label-primary': carpark.isEnable == 1, 'label-danger': carpark.isEnable == 0, 'label-danger': carpark.isEnable == null }"
+                              class="float-left label"
+                            >{{carpark.isEnable == 1 ? 'Enable' : 'Disable'}}</span>
+                          </td>
+                          <td class="center">
+                            <span
+                              :class="{ 'label label-primary': carpark.isPublic == 1, 'label-danger': carpark.isPublic == 0, 'label-danger': carpark.isPublic == null }"
+                              class="float-left label"
+                            >{{carpark.isPublic == 1 ? 'Yes' : 'No'}}</span>
+                          </td>
+                          <td class="center">{{""}}</td>
+                        </tr>
                       </tbody>
                     </table>
+                    <div
+                      class="alert alert-warning col-sm-12 m-b-xs"
+                      v-if="messageCarPark"
+                      role="alert"
+                    >{{messageCarPark}}</div>
+                    <div
+                      class="alert alert-warning col-sm-12 m-b-xs"
+                      v-show="errorResult === true"
+                      role="alert"
+                    >{{message}}</div>
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer">
-          <div class="float-right">
-            10GB of <strong>250GB</strong> Free.
-          </div>
-          <div>
-            <strong>Copyright</strong> CarPark Company &copy; 2018
-          </div>
-        </div>
-
+        <MainFooter />
       </div>
     </div>
   </div>
 </template>
+
 <script>
-  import axios from 'axios'
-  import qs from 'qs'
-  import NavSide from '../App/NavSide'
+import NavBar from "../NavBar";
+import NavSide from "../NavSide";
+import MainFooter from "../MainFooter";
+import SearchData from "../../services/SearchData";
 
-  export default {
-    components: {NavSide},
-    name: 'CarParkProduct',
-    data () {
-      return {
-        carpark: null,
-        product: null,
-        productID: null,
-        name: null,
-        image: null,
-        file: null,
-        streets: null,
-        streetID: null,
-        zoneID: 'null',
-        selectedStreet: null,
-        carparkID: 'null',
-        validated: false,
-        zoneName: null,
+import DateFormat from "../../services/DateFormat";
+import LastUpdatedDate from "../../services/LastUpdatedDate";
+import CarParkService from "../../services/CarParkService";
+import Sequence from "../../services/Sequence";
 
-        result: true,
-        message: '',
-        searchResult: '',
-        errorResult: false,
-        mySearch: [],
+export default {
+  name: "CarParkProduct",
+  data() {
+    return {
+      carpark: [],
+      carparkProduct: null,
+      carparkProductID: null,
+      zones: null,
+      name: null,
+      count: null,
+      operatorID: null,
+      operators: null,
 
-        token: localStorage.getItem('token'),
-        isLoggedIn: localStorage.getItem('isLogged'),
-        classProduct: true
-      }
+      validated: false,
+
+      carparkID: "null",
+      zoneID: null,
+      carparkName: null,
+      pg: 1,
+      result: true,
+      message: "",
+      items: [],
+      messageCarPark: "No data available.",
+      searchResult: "",
+      errorResult: false,
+      classProduct: true
+    };
+  },
+  methods: {
+    onChangeOperator: function(val) {
+      this.loadCarPark();
     },
-    methods: {
-      getSearchResult() {
-        if(this.searchResult.length === 0) {
-          this.errorResult = false;
-          this.message = "";
-          this.filterZoneByStreet()
+    onChangeCarPark: function(val) {
+      this.loadCarParkZone();
+    },
+    onChangeZone: function(val) {
+      this.loadCarParkProduct();
+    },
+    paginateNum(pageNum) {
+      this.pg = pageNum;
+      this.loadCarParkProduct(pageNum);
+    },
+    getSearchResult() {
+      if (this.searchResult.length === 0) {
+        this.errorResult = false;
+        this.message = "";
+        this.loadCarParkProduct();
+      }
+
+      SearchData.findSearchResult(
+        `season?search=${this.searchResult}&carparkID=${this.carparkID}&zoneID=${this.zoneID}&sort=createDate`
+      ).then(response => {
+        this.carparkProduct = response.data;
+        DateFormat.dateProcees(this.carparkProduct);
+        Sequence.dataSequences(this.carparkProduct, 1, this.count);
+        this.errorResult = false;
+        this.message = "";
+        this.result = true;
+        if (this.carparkProduct.length === 0) {
+          this.errorResult = true;
+          this.result = true;
+          this.message = "No data available.";
         }
-        axios
-          .get(`https://sys2.parkaidemobile.com/api/carparks/${this.carparkID}/products?search=${this.searchResult}`, {
-            headers: {
-              'x-access-token': JSON.parse(this.token)
-            }
-          })
-          .then(response => {
-            this.streets = response.data;
-            this.errorResult = false
-            this.message = "";
-            this.result = true;
-            if (this.streets.length === 0) {
-              this.errorResult = true;
-              this.result = true;
-              this.message = "No Data Available";
-            }
-          })
-
-      },
-      processFile() {
-        let formData = new FormData();
-        formData.append('imgUploader', this.file);
-        axios.post( 'https://sys2.parkaidemobile.com/api/images/upload',
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'x-access-token': JSON.parse(this.token)
-            }
-          }
-        ).then(response => {
-          this.image = response.data
-          console.log('SUCCESS!!', response.data);
-        })
-          .catch(function(ex){
-            console.log(ex);
-          });
-
-      },
-      handleFileUpload() {
-        this.file = this.$refs.file.files[0];
-        console.log("File:", this.file)
-        this.processFile();
-      },
-      filterZone() {
-        axios
-          .get(`https://sys2.parkaidemobile.com/api/carparks/${this.carparkID}/products`,{headers: { 'x-access-token': JSON.parse(this.token)}})
-          .then(response => {
-            this.product = response.data;
-            this.productID = response.data[0].id;
-            this.filterZoneByStreet()
-          })
-        console.log('worked')
-      },
-      filterZoneByStreet() {
-        axios
-          .get(`https://sys2.parkaidemobile.com/api/carparks/${this.carparkID}/zones/${this.zoneID}/streets`,{headers: { 'x-access-token': JSON.parse(this.token)}})
-          .then(response => {
-            this.streets = response.data
-          });
-        this.zone.forEach((el) => {
-          if(el.id === this.zoneID) {
-            this.zoneName = el.name
-          }
-        })
-      },
-      viewStreet(value) {
-        axios
-          .get(
-            `https://sys2.parkaidemobile.com/api/carparks/${this.carparkID}/zones/${this.zoneID}/streets/${value}`, {
-              headers: {
-                "x-access-token": JSON.parse(this.token)
-              }
-            }
-          )
-          .then(response => {
-            this.selectedStreet = response.data;
-          });
-
-      },
-      deleteStreet(value) {
-        axios
-          .delete(
-            `https://sys2.parkaidemobile.com/api/carparks/${this.carparkID}/zones/${this.zoneID}/streets/${value}`, {
-              headers: {
-                "x-access-token": JSON.parse(this.token)
-              }
-            }
-          )
-          .then(response => {
-            if(response.status == 200) {
-              document.getElementById('myModal5').style.display = "none";
-              setTimeout(() => {
-                swal({
-                  title: 'Delete it successfully',
-                  icon: 'success'
-                })
-              }, 200)
-              setTimeout(() => {
-                window.location.href = '/carparks/street'
-              }, 1000)
-            }
-          });
-      },
-      viewStreetUpdate(value) {
-        document.getElementById('myModal5').style.display = "none";
-        axios
-          .get(
-            `https://sys2.parkaidemobile.com/api/carparks/${this.carparkID}/zones/${this.zoneID}/streets/${value}`, {
-              headers: {
-                "x-access-token": JSON.parse(this.token)
-              }
-            }
-          )
-          .then(response => {
-            this.selectedStreet = response.data;
-            this.showSelectedStreet()
-          });
-      },
-      updateStreet(value) {
-        this.validated = true;
-        document.getElementById('myModalUpdate').style.display = "none";
-        axios({
-          method: 'put',
-          url: `https://sys2.parkaidemobile.com/api/carparks/${this.carparkID}/zones/${this.zoneID}/streets/${value}`,
-          data: qs.stringify({
-            name: this.name,
-            image: this.image,
-            zoneID: this.zoneID
-          }),
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'x-access-token': JSON.parse(this.token)
-          },
-        }).then(response => {
-          if (response.status == 200) {
-            console.log(response.data)
-            setTimeout(() => {
-              swal({
-                title: 'Update it successfully',
-                icon: 'success'
-              })
-            }, 200)
-            setTimeout(() => {
-              window.location.href = '/carparks/street'
-            }, 1000)
-          }
-
-
-        })
-          .catch(error => {
-            if (error.message == 'Request failed with status code 401') {
-              setTimeout(() => {
-                swal({
-                  title: 'Your or password is wrong',
-                  icon: 'error'
-                })
-              }, 1000)
-            }
-
-          });
-
-      },
-      showSelectedStreet() {
-        this.selectedStreet.forEach((el) => {
-          this.name = el.name;
-          this.image = el.image;
-          this.streetID = el.id;
-
-        })
-      },
-      logout() {
-        localStorage.removeItem('isLogged');
-        localStorage.removeItem('token');
-      }
+      });
     },
-    components: {
-      NavSide
+    loadCarParkProduct(val = 1) {
+      CarParkService.fetchAllData(
+        `operator/${this.operatorID}/carpark/${this.carparkID}/zone/${this.zoneID}/season?page=${val}&sort=createDate`
+      ).then(response => {
+        this.carparkProduct = response.data;
+        this.count = Math.ceil(response.data.count / 100);
+        if (this.carparkProduct.length < 100) {
+          this.count = val;
+        }
+        DateFormat.dateProcees(this.carparkProduct);
+        Sequence.dataSequences(this.carparkProduct, val, this.count);
+        if (this.carparkProduct.length > 0) {
+          this.messageCarPark = null;
+          this.classProduct = true;
+        } else {
+          this.messageCarPark = "No data available.";
+        }
+      });
     },
-
-    mounted () {
-
-      axios
-        .get('https://sys2.parkaidemobile.com/api/carparks/',{headers: { 'x-access-token': JSON.parse(this.token)}})
-        .then(response => {
-          this.carpark = response.data
-          this.carparkID = response.data[0].id;
-          this.filterZone()
-        })
+    loadCarPark() {
+      CarParkService.fetchAllData(
+        `operator/${this.operatorID}/carpark?sort=createDate`
+      ).then(response => {
+        this.carpark = response.data.result;
+        if (this.carpark.length > 0) {
+          this.classZone = true;
+          this.carparkID = response.data.result[0].id;
+        } else {
+          // this.messageCarPark = "No data available.";
+        }
+      });
+    },
+    loadCarParkZone() {
+      CarParkService.fetchAllData(
+        `operator/${this.operatorID}/carpark/${this.carparkID}/zone`
+      ).then(response => {
+        this.zones = response.data.result;
+        if (this.zones) {
+          this.zoneID = response.data.result[0].id;
+          this.loadCarParkProduct();
+        } else {
+          // this.messageCarPark = "No data available.";
+        }
+      });
+    },
+    filterOperator() {
+      CarParkService.fetchAllData("operator?sort=createDate").then(response => {
+        this.operators = response.data.result;
+        if (this.operators.length > 0) {
+          this.operatorID = response.data.result[0].id;
+          this.loadCarPark();
+        } else {
+          // this.messageCarPark = "No data available.";
+        }
+      });
     }
+  },
+  components: {
+    NavSide,
+    NavBar,
+    MainFooter
+  },
+  mounted() {
+    this.filterOperator();
   }
+};
 </script>

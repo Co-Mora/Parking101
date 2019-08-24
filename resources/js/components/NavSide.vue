@@ -114,9 +114,14 @@
                   </li>
                 </ul>
               </li>
-              <!-- <li :class="{ active: classProduct }">
-                              <a href="/carparks/product">Car park Product</a>
-              </li>-->
+              <li :class="{ active: classProduct }">
+                <a href="/carpark/product">Car Park Product</a>
+                <ul class="nav nav-third-level">
+                  <li :class="{ active: classFees }">
+                    <a href="/carpark/product/fees">Fees</a>
+                  </li>
+                </ul>
+              </li>
               <!-- <li :class="{ active: classVoucher }">
                               <a href="/carparks/voucher">Car park Voucher</a>
               </li>-->
