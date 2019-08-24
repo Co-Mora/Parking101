@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Parking101</title>
+    <title>PH</title>
     <link rel='shortcut icon' type="image/png" href="/images/icon.png">
     <link rel='stylesheet' href='/css/stylesheets/css/bootstrap.min.css'>
     <link rel='stylesheet' href='/css/stylesheets/font-awesome/css/font-awesome.css'>
@@ -21,8 +21,8 @@
 </head>
 
 <body>
-    <div id="app">
-        <app></app>
+    <div id="example">
+        <example></example>
     </div>
 
     <script src="/js/js/jquery-3.1.1.min.js"></script>
@@ -59,7 +59,7 @@
     <script src="/js/js/script.js"></script>
     <script src="/js/js/plugins/iCheck/icheck.min.js"></script>
 
-    <script src="{{ mix('js/index.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 
 
 </body>

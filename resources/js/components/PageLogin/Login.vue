@@ -71,7 +71,7 @@ export default {
           };
           var parsed = JSON.stringify(userData);
           localStorage.setItem("data", parsed);
-          window.location.href = "/";
+          window.location.href = "/v1/dashboard";
           //this.$router.push({ name: 'home' });
         })
         .catch(ex => {

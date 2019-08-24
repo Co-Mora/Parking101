@@ -13,7 +13,7 @@
             </li>
 
             <li>
-              <a @click="logout" href="/login">
+              <a @click="logout" href="/v1/login">
                 <i class="fa fa-sign-out"></i> Log out
               </a>
             </li>

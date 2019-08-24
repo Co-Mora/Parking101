@@ -11,4 +11,8 @@ class SpaController extends Controller
     public function index() {
     	return view('spa');
     }
+    public function product() {
+    	return view('app');
+    }
+    
 }

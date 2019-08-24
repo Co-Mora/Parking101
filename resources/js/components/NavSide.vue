@@ -44,7 +44,7 @@
             </a>
             <ul class="nav nav-second-level collapse">
               <li :class="{ active: classSubscriber }">
-                <a href="/subscriber">Subscriber</a>
+                <a href="/v1/subscriber">Subscriber</a>
               </li>
             </ul>
           </li>
@@ -56,7 +56,7 @@
             </a>
             <ul class="nav nav-second-level collapse">
               <li :class="{ active: classSeason }">
-                <a href="/season">Season</a>
+                <a href="/v1/season">Season</a>
               </li>
             </ul>
           </li>
@@ -74,7 +74,7 @@
                 </a>
                 <ul class="nav nav-third-level">
                   <li :class="{ active: classOperator }">
-                    <a href="/business/operator">Car Park Operator</a>
+                    <a href="/v1/business/operator">Car Park Operator</a>
                   </li>
                 </ul>
               </li>
@@ -89,16 +89,16 @@
             </a>
             <ul class="nav nav-second-level collapse">
               <li :class="{ active: carpark }">
-                <a href="/carpark">Car Park</a>
+                <a href="/v1/carpark">Car Park</a>
               </li>
               <li :class="{ active: classAll }">
-                <a href="/carpark/zone">
+                <a href="/v1/carpark/zone">
                   Car Park Zone
                   <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-third-level">
                   <li :class="{ active: classZone }">
-                    <a href="/carpark/zone">Zone</a>
+                    <a href="/v1/carpark/zone">Zone</a>
                   </li>
                   <!-- <li :class="{ active: classLevel }">
                                     <a href="/carparks/level">Level</a>
@@ -107,18 +107,18 @@
                                     <a href="/carparks/zlevel">ZLevel</a>
                   </li>-->
                   <li :class="{ active: classStreet }">
-                    <a href="/carpark/street">Street</a>
+                    <a href="/v1/carpark/street">Street</a>
                   </li>
                   <li :class="{ active: classBay }">
-                    <a href="/carpark/bay">Bay</a>
+                    <a href="/v1/carpark/bay">Bay</a>
                   </li>
                 </ul>
               </li>
               <li :class="{ active: classProduct }">
-                <a href="/carpark/product">Car Park Product</a>
+                <a href="/v1/carpark/product">Car Park Product</a>
                 <ul class="nav nav-third-level">
                   <li :class="{ active: classFees }">
-                    <a href="/carpark/product/fees">Fees</a>
+                    <a href="/v1/carpark/product/fees">Fees</a>
                   </li>
                 </ul>
               </li>
@@ -141,7 +141,7 @@
                 </a>
                 <ul class="nav nav-third-level">
                   <li :class="{ active: classParking }">
-                    <a href="/license">Parking License Subsccription</a>
+                    <a href="/v1/license">Parking License Subsccription</a>
                   </li>
                 </ul>
               </li>
@@ -161,12 +161,12 @@
                 </a>
                 <ul class="nav nav-third-level">
                   <li :class="{ active: classpassCardType }">
-                    <a href="/passcard">Passcard Type</a>
+                    <a href="/v1/passcard">Passcard Type</a>
                   </li>
                 </ul>
                 <ul class="nav nav-third-level">
                   <li :class="{ active: classpassCardAll }">
-                    <a href="/passcard/all">All Passcard</a>
+                    <a href="/v1/passcard/all">All Passcard</a>
                   </li>
                 </ul>
               </li>
@@ -194,13 +194,13 @@
             </a>
             <ul class="nav nav-second-level collapse">
               <li :class="{ active: classCountry }">
-                <a href="/location/country">Country</a>
+                <a href="/v1/location/country">Country</a>
               </li>
               <li :class="{ active: classState }">
-                <a href="/location/state">State</a>
+                <a href="/v1/location/state">State</a>
               </li>
               <li :class="{ active: classCity }">
-                <a href="/location/city">City</a>
+                <a href="/v1/location/city">City</a>
               </li>
             </ul>
           </li>
@@ -311,26 +311,26 @@
                 </a>
                 <ul class="nav nav-third-level">
                   <li :class="{ active: classFinance }">
-                    <a href="/transaction/online">Online Banking</a>
+                    <a href="/v1/transaction/online">Online Banking</a>
                   </li>
                   <li :class="{ active: classGiro }">
-                    <a href="/transaction/giro">Giro</a>
+                    <a href="/v1/transaction/giro">Giro</a>
                   </li>
                   <li :class="{ active: classCash }">
-                    <a href="/transaction/cash">Cash</a>
+                    <a href="/v1/transaction/cash">Cash</a>
                   </li>
                   <li :class="{ active: classCheque }">
-                    <a href="/transaction/cheque">Cheque</a>
+                    <a href="/v1/transaction/cheque">Cheque</a>
                   </li>
                   <li :class="{ active: classReceipt }">
-                    <a href="/transaction/receipt">Official Receipts</a>
+                    <a href="/v1/transaction/receipt">Official Receipts</a>
                   </li>
                 </ul>
               </li>
             </ul>
           </li>
           <li>
-            <a href="/login" @click-="logout">
+            <a href="/v1/login" @click-="logout">
               <i class="fa fa-power-off"></i>
               <span class="nav-label">Log out</span>
             </a>
