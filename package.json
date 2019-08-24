@@ -48,7 +48,7 @@
         "pug": "^2.0.3",
         "request": "^2.88.0",
         "store": "^2.0.12",
-        "sweetalert2": "^7.32.2",
+        "sweetalert2": "^8.16.3",
         "switch-button": "^1.0.1",
         "ts-loader": "^6.0.4",
         "typescript": "^3.5.3",
