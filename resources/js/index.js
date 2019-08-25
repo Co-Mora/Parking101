@@ -102,9 +102,10 @@ import Street from './components/PageCarPark/Street'
 import Bay from './components/PageCarPark/Bay'
 import CarParkProduct from './components/PageCarPark/CarParkProduct'
 
-// Route -> PageAdd -> ViewCarPark
+// Route -> PageAdd -> ViewCarPark & ViewCarParkProduct
 import ViewCarPark from './components/PageCarPark/PageAdd/ViewCarPark'
-
+import ViewCarParkProduct from './components/PageCarPark/PageAdd/ViewCarParkProduct'
+import ViewCarParkFees from './components/PageCarPark/PageAdd/ViewCarParkFees'
 
 // Route -> Location -> Country / State / City 
 import Country from './components/PageCountry/Country'
@@ -168,7 +169,7 @@ const router = new VueRouter({
             component: MainChart
         },
         {
-            path: '/?',
+            path: '/v1?',
             name: 'home',
             component: MainChart
         },
@@ -178,10 +179,24 @@ const router = new VueRouter({
             component: Index
         },
         {
-            path: '/carpark/view',
+            path: '/v1/carpark/view',
             name: 'viewCarpark',
             component: ViewCarPark,
             props: (route) => ({ carparkID: route.query.carparkID})
+        },
+        {
+            path: '/v1/carpark/product/view',
+            name: 'viewCarParkProduct',
+            component: ViewCarParkProduct,
+            // v1/carpark/product/view?carparkID=${carparkID}&zoneID=${zoneID}&seasonID=${carpark.id}
+            props: (route) => ({ carparkID: route.query.carparkID, zoneID: route.query.zoneID, seasonID: route.query.seasonID})
+        },
+        {
+            path: '/v1/carpark/product/fees',
+            name: 'viewCarParkFees',
+            component: ViewCarParkFees,
+            // v1/carpark/product/fees?carparkID=${carparkID}&zoneID=${zoneID}&seasonID=${carpark.id}
+            props: (route) => ({ carparkID: route.query.carparkID, zoneID: route.query.zoneID, seasonID: route.query.seasonID})
         },
         {
             path: '/v1/login',

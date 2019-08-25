@@ -126,19 +126,19 @@
                       <tbody v-if="result == true && errorResult === false">
                         <tr v-for="(carpark, index) in carparkProduct" :key="index" class="gradeX">
                           <td class="center">{{carpark.count}}</td>
-                          <td class="center">{{'NA'}}</td>
-                          <td class="center">{{'NA'}}</td>
+                          <td class="center">{{carparkName}}</td>
+                          <td class="center">{{zoneName}}</td>
                           <td class="center">
                             <a
                               style="color:#3498db"
-                              :href="`/carpark/product/view?carparkID=${carparkID}&zoneID=${zoneID}&seasonID=${carpark.id}`"
+                              :href="`/v1/carpark/product/view?carparkID=${carparkID}&zoneID=${zoneID}&seasonID=${carpark.id}`"
                             >{{carpark.name}}</a>
                           </td>
                           <td class="center">{{carpark.isTenant == 1 ? 'T' : 'NT'}}</td>
                           <td
                             class="center"
                           >{{carpark.bayType == 1 ? 'NR' : carpark.bayType == 2 ? 'R' : carpark.bayType == 3 ? 'TR' : 'M' }}</td>
-                          <td class="center">{{carpark.TOTALBAY || "0"}}</td>
+                          <td class="center">{{carpark.id || "0"}}</td>
                           <td class="center">{{"0"}}</td>
                           <td class="center">{{"0"}}</td>
                           <td class="center">
@@ -153,7 +153,12 @@
                               class="float-left label"
                             >{{carpark.isPublic == 1 ? 'Yes' : 'No'}}</span>
                           </td>
-                          <td class="center">{{""}}</td>
+                           <td class="center">
+                            <a
+                              style="color:#3498db"
+                              :href="`/v1/carpark/product/fees?carparkID=${carparkID}&zoneID=${zoneID}&seasonID=${carpark.id}`"
+                            >{{"Fees"}}</a>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -208,6 +213,7 @@ export default {
       carparkID: "null",
       zoneID: null,
       carparkName: null,
+      zoneName: null,
       pg: 1,
       result: true,
       message: "",
@@ -267,8 +273,13 @@ export default {
         DateFormat.dateProcees(this.carparkProduct);
         Sequence.dataSequences(this.carparkProduct, val, this.count);
         if (this.carparkProduct.length > 0) {
+          this.loadCarParkName();
+          this.loadCarParkZoneName();
           this.messageCarPark = null;
           this.classProduct = true;
+          this.carparkProduct.forEach(el => {
+            this.loadAllocBay(el.id);
+          })
         } else {
           this.messageCarPark = "No data available.";
         }
@@ -300,6 +311,20 @@ export default {
         }
       });
     },
+    loadCarParkName() {
+      CarParkService.fetchAllData(
+        `carpark?carparkID=${this.carparkID}`
+      ).then(response => {
+        this.carparkName = response.data.result[0].name
+      });
+    },
+    loadCarParkZoneName() {
+      CarParkService.fetchAllData(
+        `zone/${this.zoneID}`
+      ).then(response => {
+        this.zoneName = response.data[0].name
+      });
+    },
     filterOperator() {
       CarParkService.fetchAllData("operator?sort=createDate").then(response => {
         this.operators = response.data.result;
@@ -307,8 +332,16 @@ export default {
           this.operatorID = response.data.result[0].id;
           this.loadCarPark();
         } else {
-          // this.messageCarPark = "No data available.";
+          // this.messageCarPark = "No data availab le.";
         }
+      });
+    },
+    loadAllocBay(val) {
+      CarParkService.fetchAllData(`bay?carparkID=${this.carparkID}&seasonID=${val}`).then(response => {
+        this.carparkProduct.forEach(el => {
+          if(el.id == val)
+            el.id = response.data.count;
+        })
       });
     }
   },

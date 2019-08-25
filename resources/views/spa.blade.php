@@ -8,6 +8,7 @@
     <title>Parking101</title>
     <link rel='shortcut icon' type="image/png" href="/images/icon.png">
     <link rel='stylesheet' href='/css/stylesheets/css/bootstrap.min.css'>
+    <link href="/css/stylesheets/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
     <link rel='stylesheet' href='/css/stylesheets/font-awesome/css/font-awesome.css'>
     <link rel='stylesheet' href='/css/stylesheets/css/plugins/morris/morris-0.4.3.min.css'>
     <link rel='stylesheet' href='/css/stylesheets/css/plugins/toastr/toastr.min.css'>
@@ -51,6 +52,7 @@
     <script src="/js/js/plugins/chartJs/Chart.min.js"></script>
     <script src="/js/js/demo/chartjs-demo.js"></script>
     <!-- Toastr -->
+    
     <script src="/js/js/plugins/toastr/toastr.min.js"></script>
     <script src="/js/js/plugins/dataTables/datatables.min.js"></script>
     <script src="/js/js/plugins/footable/footable.all.min.js"></script>
@@ -58,6 +60,7 @@
     <script src="/js/js/plugins/chosen/chosen.jquery.js"></script>
     <script src="/js/js/script.js"></script>
     <script src="/js/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/js/js/plugins/summernote/summernote-bs4.js"></script>
 
     <script src="{{ mix('js/index.js') }}"></script>
 

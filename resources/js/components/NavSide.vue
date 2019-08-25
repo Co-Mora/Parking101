@@ -115,10 +115,18 @@
                 </ul>
               </li>
               <li :class="{ active: classProduct }">
-                <a href="/v1/carpark/product">Car Park Product</a>
+                <a href="#">Car Park Product</a>
                 <ul class="nav nav-third-level">
-                  <li :class="{ active: classFees }">
-                    <a href="/v1/carpark/product/fees">Fees</a>
+                  <li :class="{ active: classProduct }">
+                    <a href="/v1/carpark/product">Car Park Product</a>
+                  </li>
+                </ul>
+              </li>
+              <li :class="{ active: classTenant }">
+                <a href="#">Car Park Tenant</a>
+                <ul class="nav nav-third-level">
+                  <li :class="{ active: classTenant }">
+                    <a href="/v1/carpark/tenant">Car Park Tenant</a>
                   </li>
                 </ul>
               </li>
@@ -378,6 +386,7 @@ export default {
     "classVoucherBuy",
     "classProduct",
     "classUsers",
+    "classTenant",
     "classpassCardType",
     "classpassCardAll",
     "classParking",
@@ -449,6 +458,8 @@ export default {
       this.classAll = true;
     }
     if (this.classVoucher) {
+      this.carparkActive = true;
+    }if(this.classTenant) {
       this.carparkActive = true;
     }
     if (this.classProduct) {

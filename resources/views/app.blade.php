@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PH</title>
+    <title>Parking101</title>
     <link rel='shortcut icon' type="image/png" href="/images/icon.png">
     <link rel='stylesheet' href='/css/stylesheets/css/bootstrap.min.css'>
     <link rel='stylesheet' href='/css/stylesheets/font-awesome/css/font-awesome.css'>
@@ -21,8 +21,8 @@
 </head>
 
 <body>
-    <div id="example">
-        <example></example>
+    <div id="root">
+        <root></root>
     </div>
 
     <script src="/js/js/jquery-3.1.1.min.js"></script>
