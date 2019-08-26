@@ -3577,7 +3577,7 @@ fs-extra@^7.0.1:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
-fs-extra@^8.0.1:
+fs-extra@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
   integrity sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==
@@ -5967,9 +5967,10 @@ path-type@^3.0.0:
   dependencies:
     pify "^3.0.0"
 
-"path@git://github.com/component/path.git#7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4":
+"path@git://github.com/component/path#7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4":
   version "1.0.0"
-  resolved "git://github.com/component/path.git#7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4"
+  uid "7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4"
+  resolved "git://github.com/component/path#7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4"
 
 pbkdf2@^3.0.3:
   version "3.0.17"
