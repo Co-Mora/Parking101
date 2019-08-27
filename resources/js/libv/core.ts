@@ -1,5 +1,5 @@
 interface CarPark {
-
+    
     operatorID?: string;
     carparkID?: string;
     CustomerID?: string;

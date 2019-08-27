@@ -14,18 +14,17 @@
                 <div class="ibox-content">
                   <div class="row">
                     <div class="col-lg-6">
-                      <paginate
-                        v-if="!messageBay"
-                        :page-count="count"
-                        :pageCount="count"
-                        :page-range="3"
-                        :margin-pages="2"
-                        :click-handler="paginateNum"
-                        :prev-text="'Prev'"
-                        :next-text="'Next'"
-                        :container-class="'pagination'"
-                        :page-class="'page-item'"
-                      ></paginate>
+                        <paginate
+                            v-if="!messageBay"
+                            :page-count="count"
+                            :page-range="3"
+                            :margin-pages="2"
+                            :click-handler="paginateNum"
+                            :prev-text="'Prev'"
+                            :next-text="'Next'"
+                            :container-class="'pagination'"
+                            :page-class="'page-item'"
+                        ></paginate>
                     </div>
 
                     <div class="col-sm-6">
@@ -350,8 +349,10 @@ export default {
         this.bays = response.data.result;
         this.messageBay = "";
         this.count = Math.ceil(response.data.count / 100);
-        if (this.carpark.length < 100) {
-          this.count = value;
+        console.log(this.count);
+        if (this.bays.length < 100) {
+          this.count = value
+
         }
         Sequence.dataSequences(this.bays, value, this.count);
         if (this.bays.length === 0) {
@@ -367,7 +368,9 @@ export default {
       ).then(response => {
         this.bays = response.data.result;
         this.count = Math.ceil(response.data.count / 100);
-        if (this.carpark.length < 100) {
+          console.log(this.count);
+
+          if (this.bays.length < 100) {
           this.count = value;
         }
         Sequence.dataSequences(this.bays, value, this.count);

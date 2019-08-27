@@ -9,9 +9,8 @@ export default class App extends Component {
             <div id="wrapper">
                 <div id="page-wrapper" className="gray-bg">
                     <Layout />
-
                     <div className="wrapper wrapper-content animated fadeInRight">
-
+                        
                     </div>
                 </div>
             </div>

@@ -83,7 +83,7 @@
                         <a
                           style="color:#3498db"
                           @click="carParkValue(car.id)"
-                          :href="`/carpark/view?carparkID=${car.id}`"
+                          :href="`/v1/carpark/view?carparkID=${car.id}`"
                         >{{car.name}}</a>
                       </td>
                       <td class="center">{{car.bay}}</td>

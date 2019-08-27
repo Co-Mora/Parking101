@@ -138,7 +138,7 @@
                           <td
                             class="center"
                           >{{carpark.bayType == 1 ? 'NR' : carpark.bayType == 2 ? 'R' : carpark.bayType == 3 ? 'TR' : 'M' }}</td>
-                          <td class="center">{{carpark.id || "0"}}</td>
+                          <td class="center">{{carpark.TOTALBAY || "0"}}</td>
                           <td class="center">{{"0"}}</td>
                           <td class="center">{{"0"}}</td>
                           <td class="center">
@@ -340,7 +340,7 @@ export default {
       CarParkService.fetchAllData(`bay?carparkID=${this.carparkID}&seasonID=${val}`).then(response => {
         this.carparkProduct.forEach(el => {
           if(el.id == val)
-            el.id = response.data.count;
+            el.TOTALBAY = response.data.count;
         })
       });
     }

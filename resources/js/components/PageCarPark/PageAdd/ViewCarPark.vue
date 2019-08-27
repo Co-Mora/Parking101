@@ -279,7 +279,8 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="allowHalf == 1"
+                                  v-model="allowHalf"
+
                                 type="checkbox"
                                 value="option1"
                                 name="a"
@@ -290,7 +291,8 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="allowFull == 1"
+                                  v-model="allowFull"
+
                                 type="checkbox"
                                 value="option1"
                                 name="a"
@@ -301,7 +303,8 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="allowAny == 1"
+                                  v-model="allowAny"
+
                                 type="checkbox"
                                 value="option1"
                                 name="a"
@@ -321,7 +324,8 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="parkaideEnable == 1"
+                                  v-model="parkaideEnable"
+
                                 type="checkbox"
                                 value="option1"
                                 name="a"
@@ -332,7 +336,8 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="exemptLatePay == 1"
+                                  v-model="exemptLatePay"
+
                                 type="checkbox"
                                 value="option1"
                                 name="a"
@@ -343,8 +348,9 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="exemptSST !== 0"
                                 type="checkbox"
+                                v-model="exemptSST"
+
                                 value="option1"
                                 name="a"
                               />
@@ -354,10 +360,8 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="parkaideOnly === 1"
+                                v-model="parkaideOnly"
                                 type="checkbox"
-                                value="option1"
-                                name="a"
                               />
                               <i style="margin-left:10px"></i> ParkAide Enable (Force)
                             </label>
@@ -368,10 +372,10 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="suspendApplication == 1"
+                                  v-model="suspendApplication"
+
                                 type="checkbox"
-                                value="option1"
-                                name="a"
+
                               />
                               <i style="margin-left:10px"></i> Suspend from Parking Application
                             </label>
@@ -379,7 +383,8 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="exemptStopbBill == 1"
+                                  v-model="exemptStopbBill"
+
                                 type="checkbox"
                                 value="option1"
                                 name="a"
@@ -390,10 +395,10 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="noSST === 1"
+                                  v-model="noSST"
+
                                 type="checkbox"
-                                value="option1"
-                                name="a"
+
                               />
                               <i style="margin-left:10px"></i> Car Park No SST
                             </label>
@@ -401,10 +406,9 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                :checked="parkaideEnable === 1"
+                                  v-model="parkaideEnable"
                                 type="checkbox"
-                                value="option1"
-                                name="a"
+
                               />
                               <i style="margin-left:10px"></i> ParkAide Enable (Optional)
                             </label>
@@ -639,7 +643,8 @@
                             <div class="i-checks">
                               <label>
                                 <input
-                                  :checked="giro == 1"
+                                    v-model="giro"
+
                                   type="checkbox"
                                   value="option1"
                                   name="a"
@@ -650,7 +655,8 @@
                             <div class="i-checks">
                               <label>
                                 <input
-                                  :checked="cash == 1"
+                                    v-model="cash"
+
                                   type="checkbox"
                                   value="option1"
                                   name="a"
@@ -661,10 +667,9 @@
                             <div class="i-checks">
                               <label>
                                 <input
-                                  :checked="cheque == 1"
+                                    v-model="cheque"
+
                                   type="checkbox"
-                                  value="option1"
-                                  name="a"
                                 />
                                 <i style="margin-left:10px"></i> Cheque (Site)
                               </label>
@@ -672,7 +677,7 @@
                             <div class="i-checks">
                               <label>
                                 <input
-                                  :checked="onlinePayment == 0"
+                                    v-model="onlinePayment"
                                   type="checkbox"
                                   value="option1"
                                   name="a"
@@ -696,7 +701,7 @@
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-4 col-sm-offset-2">
-                      <a href="/carpark" class="btn btn-default btn-sm">Cancel</a>
+                      <a href="/v1/carpark" class="btn btn-default btn-sm">Cancel</a>
                     </div>
                   </div>
                 </div>
@@ -772,6 +777,7 @@ export default {
       companyName: null,
 
       //seasonSetting
+        seasonSetting: null,
       commencementDate1: null,
       commencementDate2: null,
       startDate: null,
@@ -902,7 +908,7 @@ export default {
       CarParkService.fetchAllData(
         `carpark/${this.$route.query.carparkID}/seasonSetting`
       ).then(response => {
-        console.log(response.data[0]);
+        this.seasonSetting = response.data;
         DateFormat.seasonSettingDate(response.data);
         this.commencementDate1 = response.data[0].CommencementDate1;
         this.commencementDate2 = response.data[0].CommencementDate2;
@@ -912,19 +918,21 @@ export default {
           this.allowFull = 1;
         if (this.commencementDate1 == 0 && this.commencementDate2 == 0)
           this.allowAny = 1;
+        this.seasonSetting.forEach(el => {
+            this.startDate = el.startDate;
+            this.endDate = el.endDate;
+            this.exemptLatePay = el.ExemptLatePay;
+            this.exemptSST = el.ExemptSST;
+            this.suspendApplication = el.SuspendApplication;
+            this.exemptStopbBill =el.ExemptStopbBill;
+            this.noSST =el.NoSST;
+            this.parkaideOnly = el.ParkaideOnly;
+            this.parkaideEnable = el.ParkaideEnable;
+            this.reactivation = el.Reactivation;
+            this.latePenalty = el.LatePenalty;
+            this.reinstatement = el.Reinstatement;
+        });
 
-        this.startDate = response.data[0].startDate;
-        this.endDate = response.data[0].endDate;
-        this.exemptLatePay = response.data[0].ExemptLatePay;
-        this.exemptSST = response.data[0].ExemptSST;
-        this.suspendApplication = response.data[0].SuspendApplication;
-        this.exemptStopbBill = response.data[0].ExemptStopbBill;
-        this.noSST = response.data[0].NoSST;
-        this.parkaideOnly = response.data[0].ParkaideOnly;
-        this.parkaideEnable = response.data[0].ParkaideEnable;
-        this.reactivation = response.data[0].Reactivation;
-        this.latePenalty = response.data[0].LatePenalty;
-        this.reinstatement = response.data[0].Reinstatement;
       });
     },
     loadBilingSetting() {

@@ -11,5 +11,8 @@
 |
 */
 
+Route::get('/', function() {
+    return redirect('v1/dashboard');
+})
 Route::get('/v1/{any}', 'SpaController@index')->where('any', '.*');
 Route::get('/v2/{any}', 'SpaController@product')->where('any', '.*');
