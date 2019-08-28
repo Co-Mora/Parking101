@@ -274,7 +274,7 @@ export default {
           }
         })
         .catch(ex => {
-          this.$router.push({ name: "login" });
+          this.$router.push({ path: "/v1/login" });
         });
     },
     filterCarPark() {

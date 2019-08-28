@@ -258,7 +258,7 @@ export default {
           this.messageZone = "No data available.";
         }
       }).catch(ex => {
-          this.$router.push({ name: "login" });
+          this.$router.push({ path: "/v1/login" });
         });
     }
   },

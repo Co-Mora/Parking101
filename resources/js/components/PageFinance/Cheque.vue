@@ -211,7 +211,7 @@ export default {
           this.loadData1();
         })
         .catch(ex => {
-          this.$route.push({ name: "login" });
+          this.$route.push({ path: "/v1/login" });
         });
     },
      loadData1() {

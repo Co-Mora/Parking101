@@ -37,7 +37,7 @@ export default {
   mounted() {
     // console.log(this.$route.query);
     if (!localStorage.getItem("data")) {
-      window.location.href = "/login";
+      window.location.href = "/v1/login";
     }
     console.log(this.$route.query.hasOwnProperty('email'))
     if (this.$route.query.hasOwnProperty('email')) {

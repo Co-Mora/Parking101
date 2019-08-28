@@ -207,7 +207,7 @@ export default {
           }
         })
         .catch(ex => {
-          this.$router.push({ name: "login" });
+          this.$router.push({ name: "/v1/login" });
         });
     },
     loadData(value = 1) {
