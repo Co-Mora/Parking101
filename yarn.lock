@@ -5967,9 +5967,10 @@ path-type@^3.0.0:
   dependencies:
     pify "^3.0.0"
 
-"path@git://github.com/component/path.git#7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4":
+"path@git://github.com/component/path#7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4":
   version "1.0.0"
-  resolved "git://github.com/component/path.git#7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4"
+  uid "7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4"
+  resolved "git://github.com/component/path#7b4f23c38833a5232cd5e3d50ccb8cd13dbcd2f4"
 
 pbkdf2@^3.0.3:
   version "3.0.17"
@@ -8038,10 +8039,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sweetalert2@^7.32.2:
-  version "7.33.1"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.33.1.tgz#7e3534d2c2962f875f419cfea5d75ee526d65cd4"
-  integrity sha512-69KYtyhtxejFG0HDb8aVhAwbpAWPSTZwaL5vxDHgojErD2KeFxTmRgmkbiLtMC8UdTFXRmvTPtZTF4459MUb7w==
+sweetalert2@^8.16.4:
+  version "8.16.4"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.16.4.tgz#a51ec13e3065fa0ad9c867f16beecf1a3da12c05"
+  integrity sha512-ytVBJ6C2Pr5M9WoYL/b6sXsdvm+W0AtmyRsrQMXrgHdNPdwdo5m4Bn44RnQKHz3gGl5LaCJuHaX+7ODubPfOdg==
 
 sweetalert@^2.1.2:
   version "2.1.2"
