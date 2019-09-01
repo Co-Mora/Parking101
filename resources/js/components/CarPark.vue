@@ -62,11 +62,11 @@
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>City</th>
                       <th>State</th>
+                      <th>City</th>
                       <th>CP ID</th>
                       <th>CP Code</th>
-                      <th>Car Park</th>
+                      <th>ParkAide Car Park ID</th>
                       <th>Total Bay</th>
                       <th>Is Enable</th>
                       <th>Date Created</th>
@@ -84,7 +84,7 @@
                           style="color:#3498db"
                           @click="carParkValue(car.id)"
                           :href="`/v1/carpark/view?carparkID=${car.id}`"
-                        >{{car.name}}</a>
+                        >{{car.code1}}</a>
                       </td>
                       <td class="center">{{car.bay}}</td>
                       <td class="center">
@@ -163,7 +163,7 @@ export default {
     };
   },
   methods: {
-   
+
     onChangeOperator: function(val) {
       this.paginateNum(1);
     },
@@ -207,7 +207,7 @@ export default {
           }
         })
         .catch(ex => {
-          this.$router.push({ name: "/v1/login" });
+          this.$router.push({ path: "/v1/login" });
         });
     },
     loadData(value = 1) {

@@ -5,7 +5,7 @@ export default class CarParkTenant extends Component {
     render() {
         return (
             <div>
-                
+
             </div>
         )
     }
