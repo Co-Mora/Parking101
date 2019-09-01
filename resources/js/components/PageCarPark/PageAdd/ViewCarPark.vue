@@ -279,11 +279,8 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                  v-model="allowHalf"
-
                                 type="checkbox"
-                                value="option1"
-                                name="a"
+                                id="allowHalf"
                               />
                               <i style="margin-left:10px"></i> Allow Half Month (1st & 16th)
                             </label>
@@ -291,11 +288,9 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                  v-model="allowFull"
-
+                                  id="allowFull"
                                 type="checkbox"
-                                value="option1"
-                                name="a"
+
                               />
                               <i style="margin-left:10px"></i> Allow Full Month Only (1st)
                             </label>
@@ -303,11 +298,9 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                  v-model="allowAny"
-
+                                  id="allowAny"
                                 type="checkbox"
-                                value="option1"
-                                name="a"
+
                               />
                               <i style="margin-left:10px"></i> Allow Any Day of Month
                             </label>
@@ -383,10 +376,9 @@
                           <div class="i-checks">
                             <label>
                               <input
-                                  v-model="exemptStopbBill"
-
+                                  :checked="exemptStopbBill == 1"
                                 type="checkbox"
-                                value="option1"
+                                :value="exemptStopbBill"
                                 name="a"
                               />
                               <i style="margin-left:10px"></i> Exemption from Stop Billing
@@ -395,8 +387,9 @@
                           <div class="i-checks">
                             <label>
                               <input
+                                  :value="noSST"
                                   v-model="noSST"
-
+                                  :checked="noSST == 1"
                                 type="checkbox"
 
                               />
@@ -677,7 +670,7 @@
                             <div class="i-checks">
                               <label>
                                 <input
-                                    v-model="onlinePayment"
+                                    :aria-checked="onlinePayment"
                                   type="checkbox"
                                   value="option1"
                                   name="a"
@@ -841,8 +834,8 @@ export default {
     geolocate() {
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lat: this.lat,
+          lng: this.log
         };
       });
     },
@@ -867,7 +860,6 @@ export default {
             : "N/A";
       });
       this.loadAddress();
-      this.loadSeasonSetting();
       this.loadCity(this.cityID);
     },
     loadCity(value) {
@@ -905,20 +897,21 @@ export default {
       });
     },
     loadSeasonSetting() {
-      CarParkService.fetchAllData(
+
+        CarParkService.fetchAllData(
         `carpark/${this.$route.query.carparkID}/seasonSetting`
       ).then(response => {
         this.seasonSetting = response.data;
-        DateFormat.seasonSettingDate(response.data);
+        DateFormat.dateStartProcess(this.seasonSetting);
         this.commencementDate1 = response.data[0].CommencementDate1;
         this.commencementDate2 = response.data[0].CommencementDate2;
         if (this.commencementDate1 == 1 && this.commencementDate2 == 16)
           this.allowHalf = 1;
         if (this.commencementDate1 == 1 || this.commencementDate2 == 0)
-          this.allowFull = 1;
+            this.allowFull = 1;
         if (this.commencementDate1 == 0 && this.commencementDate2 == 0)
-          this.allowAny = 1;
-        this.seasonSetting.forEach(el => {
+                this.allowAny = 1;
+            this.seasonSetting.forEach(el => {
             this.startDate = el.startDate;
             this.endDate = el.endDate;
             this.exemptLatePay = el.ExemptLatePay;
@@ -963,7 +956,9 @@ export default {
       });
     },
     loadPaymentMethod() {
-      CarParkService.fetchAllData(
+
+
+        CarParkService.fetchAllData(
         `carpark/${this.$route.query.carparkID}/seasonSetting`
       ).then(response => {
         this.giro = response.data[0].Giro;
@@ -988,23 +983,27 @@ export default {
     }
   },
   mounted() {
-    this.loadBillingTerms();
+      $(document).ready(function() {
+          $(".summernote").summernote();
+          // // $('.summernote').summernote('code', this.tnc);
+          // var markupStr = this.tnc;
+          // $('.summernote').summernote('code', markupStr);
+      });
+      $(document).ready(function() {
+          $(".i-checks").iCheck({
+              checkboxClass: "icheckbox_square-green",
+              radioClass: "iradio_square-green"
+          });
+      });
+      this.loadSeasonSetting();
+      this.loadPaymentMethod();
+      this.loadBillingTerms();
 
     this.geolocate();
     this.loadData();
 
-    $(document).ready(function() {
-      $(".i-checks").iCheck({
-        checkboxClass: "icheckbox_square-green",
-        radioClass: "iradio_square-green"
-      });
-    });
-    $(document).ready(function() {
-      $(".summernote").summernote();
-      // // $('.summernote').summernote('code', this.tnc);
-      // var markupStr = this.tnc;
-      // $('.summernote').summernote('code', markupStr);
-    });
+
+
   }
 };
 </script>

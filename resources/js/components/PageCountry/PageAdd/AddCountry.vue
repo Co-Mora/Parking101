@@ -46,18 +46,18 @@ export default {
     return {
       validated: true,
       name: null,
-      
+
     };
   },
   methods: {
     cancelModal() {
       this.isBoxOpen = true
-      
+
     },
     validatedData() {
       if (this.name.length > 0) {
         this.validated = false;
-        
+
       } else {
         this.validated = true;
       }
@@ -71,12 +71,12 @@ export default {
         );
         $("#myModalAdd").modal("hide");
         setTimeout(() => {
-          window.location.href = `/location/country`;
+          window.location.href = `/v1/location/country`;
         }, 400);
     },
-    
+
   },
-  
-  
+
+
 };
 </script>

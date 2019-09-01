@@ -52,17 +52,17 @@ const dateProcees = (data) => {
       var time = year  + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec ;
       if(el.Date !== 0) {
         el.Date = time
-  
-      } 
+
+      }
     }else {
       el.Date = "N/A";
     }
-   
+
 
   });
 
      data.forEach((el) => {
-      
+
       var a = new Date(el.updateDate * 1000);
       var months = ['1','2','3','4','5','6','7','8','9','10','11','12'];
       var year = a.getFullYear();
@@ -72,15 +72,15 @@ const dateProcees = (data) => {
       var min = a.getMinutes();
       var sec = a.getSeconds();
       var time = year  + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec ;
-      
+
       if(el.updateDate !== 0) {
         el.updateDate = time
-        
+
       }
-     
+
     });
-   
-    
+
+
  }
 
  const dateStartProcess = (data) => {
@@ -107,7 +107,7 @@ const dateProcees = (data) => {
 
  module.exports = {
     dateStartProcess,
-    dateProcees   
+    dateProcees
  }
 
 

@@ -80,7 +80,7 @@
               </li>
             </ul>
           </li>
-          
+
           <li :class="{ active: carparkActive }">
             <a :class="{ active: carpark }" href="#">
               <i class="fa fa-car"></i>
@@ -141,6 +141,24 @@
               <span class="nav-label">Parking License</span>
               <span class="fa arrow"></span>
             </a>
+              <ul class="nav nav-second-level collapse">
+                  <li :class="{ active: classCustomerList }">
+                      <a>
+                          Customer List
+                          <span class="fa arrow"></span>
+                      </a>
+                      <ul class="nav nav-third-level">
+                          <li :class="{ active: classCompany }">
+                              <a href="/v1/customer-list/company">Company</a>
+                          </li>
+                          <li :class="{ active: classCompanyParker }">
+                              <a href="/v1/customer-list/company">Company Parkers</a>
+                          </li>
+                      </ul>
+
+
+                  </li>
+              </ul>
             <ul class="nav nav-second-level collapse">
               <li :class="{ active: parking }">
                 <a>
@@ -154,6 +172,7 @@
                 </ul>
               </li>
             </ul>
+
           </li>
           <li :class="{ active: passcard }">
             <a :class="{ active: passcard }" href="#">
@@ -444,7 +463,7 @@ export default {
       this.passcard = true;
     }
     if (this.classCarPark) {
-      this.carpark = true; 
+      this.carpark = true;
       this.carparkActive = true;
     }
     if (

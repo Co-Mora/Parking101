@@ -74,7 +74,7 @@ const deleteData = (URL, value) => {
         })
       }, 200);
       setTimeout(() => {
-        window.location.href = '/carparks'
+        window.location.href = '/v1/carpark'
       }, 1000)
     }
   }).catch(error => {
