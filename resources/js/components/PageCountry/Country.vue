@@ -226,7 +226,7 @@ export default {
         })
       );
       setTimeout(() => {
-        window.location.href = `/location/country`;
+        window.location.href = `/v1/location/country`;
       }, 300);
     },
     showSelectedCountry() {

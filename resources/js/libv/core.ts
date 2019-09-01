@@ -1,5 +1,5 @@
 interface CarPark {
-    
+
     operatorID?: string;
     carparkID?: string;
     CustomerID?: string;
@@ -19,10 +19,10 @@ export class Core implements CarPark {
     }
 
     loadData(config: CarPark) {
-        
+
     }
 
-    
-    
+
+
 }
 
