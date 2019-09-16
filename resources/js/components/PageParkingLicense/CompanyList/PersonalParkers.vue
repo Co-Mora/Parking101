@@ -83,7 +83,7 @@
                     </div>
                   </div>
                   <div class="table-responsive">
-                    <table v-show="!messageCar > 0 && !message" class="table table-bordered">
+                    <table v-if="!messageCar && !message" class="table table-bordered">
                       <thead>
                         <tr>
                           <th>No.</th>
@@ -157,7 +157,7 @@ export default {
       customers: null,
 
       validated: false,
-      messageCar: null,
+      messageCar: "",
       name: null,
 
       page: 10,
@@ -219,11 +219,12 @@ export default {
       CarParkService.fetchAllData(`operator?sort=createDate`)
         .then(response => {
           this.operators = response.data.result;
+          this.messageCar = "";
           if (this.operators.length > 0) {
             this.operatorID = response.data.result[1].id;
             this.loadCustomer();
           } else {
-            this.message = "No data available.";
+            this.messageCar = "No data available.";
           }
         })
         .catch(ex => {
@@ -235,12 +236,14 @@ export default {
         `operator/${this.operatorID}/customer?isCompany=0`
       )
         .then(response => {
+          this.messageCar = "";
+
           this.customers = response.data.result;
           if (this.customers.length > 0) {
             this.customerID = response.data.result[0].id;
             this.loadData(1);
           } else {
-            this.message = "No data available.";
+            this.messageCar = "No data available.";
           }
         })
         .catch(ex => {
@@ -252,30 +255,30 @@ export default {
       this.objectLoadData = `operator/${this.operatorID}/customer/${this.customerID}/parker`;
       CarParkService.fetchAllData(`${this.objectLoadData}`).then(response => {
         this.companies = response.data.result;
-        this.total = response.data.count;
-        this.count = Math.ceil(response.data.count / 100);
-        if (this.companies.length < 100) {
-          this.count = value;
-        }
-        DateFormat.dateProcees(this.companies);
-        Sequence.dataSequences(this.companies, value, this.count);
-
-        if (value == 1) {
-          this.start = 1;
-          this.end = 100;
-        } else {
-          if (value === this.count && this.companies.length < 100) {
-            this.start = Sequence.handleViewSquence();
-            this.end = this.total;
-          } else {
-            this.start = Sequence.handleViewSquence() - 100;
-            this.end = Sequence.handleEndSquence() - 101;
-          }
-        }
-
         this.messageCar = "";
         if (this.companies.length === 0) {
           this.messageCar = "No data available.";
+        } else {
+          this.total = response.data.count;
+          this.count = Math.ceil(response.data.count / 100);
+          if (this.companies.length < 100) {
+            this.count = value;
+          }
+          DateFormat.dateProcees(this.companies);
+          Sequence.dataSequences(this.companies, value, this.count);
+
+          if (value == 1) {
+            this.start = 1;
+            this.end = 100;
+          } else {
+            if (value === this.count && this.companies.length < 100) {
+              this.start = Sequence.handleViewSquence();
+              this.end = this.total;
+            } else {
+              this.start = Sequence.handleViewSquence() - 100;
+              this.end = Sequence.handleEndSquence() - 101;
+            }
+          }
         }
       });
     },
