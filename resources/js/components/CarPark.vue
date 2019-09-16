@@ -66,7 +66,8 @@
                       <th>City</th>
                       <th>CP ID</th>
                       <th>CP Code</th>
-                      <th>ParkAide Car Park ID</th>
+                        <th>Car Park</th>
+                        <th>ParkAide Car Park ID</th>
                       <th>Total Bay</th>
                       <th>Is Enable</th>
                       <th>Date Created</th>
@@ -79,7 +80,8 @@
                       <td class="center">{{car.cityID}}</td>
                       <td class="center">{{car.id}}</td>
                       <td class="center">{{car.carparkCode}}</td>
-                      <td class="center">
+                        <td class="center">{{car.name}}</td>
+                        <td class="center">
                         <a
                           style="color:#3498db"
                           @click="carParkValue(car.id)"
@@ -178,7 +180,7 @@ export default {
         this.loadData(1);
         return 0;
       }
-      SearchData.findSearchResult(`carpark?search=${this.searchResult}`).then(
+      SearchData.findSearchResult(`operator/${this.operatorID}/carpark?search=${this.searchResult}`).then(
         response => {
           this.carpark = response.data.result;
           DateFormat.dateProcees(this.carpark);

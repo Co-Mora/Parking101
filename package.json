@@ -46,6 +46,7 @@
         "pdfjs": "^2.3.0",
         "pdfreader": "^1.0.4",
         "pug": "^2.0.3",
+        "react-router-dom": "^5.0.1",
         "request": "^2.88.0",
         "store": "^2.0.12",
         "sweetalert2": "^7.32.2",

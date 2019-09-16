@@ -69,13 +69,13 @@
               <label>Email Verification</label>
               <div class="i-checks">
                 <label>
-                  <input :checked="isVerified == 1" type="checkbox" value="option1" name="a">
+                  <input disabled :checked="isVerified == 1" type="checkbox" value="option1" name="a">
                   <i></i>  Verified
                 </label>
               </div>
               <div class="i-checks">
                 <label>
-                  <input :checked="isVerified == 0" type="checkbox" value="option1" name="a">
+                  <input disabled :checked="isVerified == 0" type="checkbox" value="option1" name="a">
                   <i></i>  Not Verified
                 </label>
               </div>
@@ -106,7 +106,7 @@ export default {
   data() {
     return {
       dataSource: null,
-              
+
       subscriberName: null,
       subID: null,
 

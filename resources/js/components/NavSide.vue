@@ -11,7 +11,7 @@
                 style="margin-left: 40px"
                 :width="60"
                 src="/images/icon.png"
-              >
+              />
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <span style="color:#fff" class="text-muted text-xs block">
                   Account
@@ -29,7 +29,6 @@
               </ul>
             </div>
           </li>
-
           <li>
             <a href="/">
               <i class="fa fa-dashboard"></i>
@@ -47,8 +46,21 @@
                 <a href="/v1/subscriber">Subscriber</a>
               </li>
             </ul>
+            <ul class="nav nav-second-level collapse">
+              <li :class="{ active: classAll }">
+                <a href="/v1/carpark/zone">
+                  Season
+                  <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-third-level">
+                  <li :class="{ active: classSeasonSub }">
+                    <a href="/v1/subscriber/sync">Sync to ParkAide</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </li>
-               <li :class="{ active: season }">
+          <li :class="{ active: season }">
             <a :class="{ active: classSeason }" href="#">
               <i class="fa fa-group"></i>
               <span class="nav-label">Season</span>
@@ -60,7 +72,7 @@
               </li>
             </ul>
           </li>
-           <li :class="{ active: operator }">
+          <li :class="{ active: operator }">
             <a :class="{ active: classOperator }" href="#">
               <i class="fa fa-suitcase"></i>
               <span class="nav-label">Business</span>
@@ -100,12 +112,6 @@
                   <li :class="{ active: classZone }">
                     <a href="/v1/carpark/zone">Zone</a>
                   </li>
-                  <!-- <li :class="{ active: classLevel }">
-                                    <a href="/carparks/level">Level</a>
-                  </li>-->
-                  <!-- <li :class="{ active: classZLevel }">
-                                    <a href="/carparks/zlevel">ZLevel</a>
-                  </li>-->
                   <li :class="{ active: classStreet }">
                     <a href="/v1/carpark/street">Street</a>
                   </li>
@@ -130,9 +136,6 @@
                   </li>
                 </ul>
               </li>
-              <!-- <li :class="{ active: classVoucher }">
-                              <a href="/carparks/voucher">Car park Voucher</a>
-              </li>-->
             </ul>
           </li>
           <li :class="{ active: parking }">
@@ -141,26 +144,30 @@
               <span class="nav-label">Parking License</span>
               <span class="fa arrow"></span>
             </a>
-              <ul class="nav nav-second-level collapse">
-                  <li :class="{ active: classCustomerList }">
-                      <a>
-                          Customer List
-                          <span class="fa arrow"></span>
-                      </a>
-                      <ul class="nav nav-third-level">
-                          <li :class="{ active: classCompany }">
-                              <a href="/v1/customer-list/company">Company</a>
-                          </li>
-                          <li :class="{ active: classCompanyParker }">
-                              <a href="/v1/customer-list/company">Company Parkers</a>
-                          </li>
-                      </ul>
-
-
-                  </li>
-              </ul>
             <ul class="nav nav-second-level collapse">
-              <li :class="{ active: parking }">
+              <li :class="{ active: CustomerList }">
+                <a>
+                  Customer List
+                  <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-third-level">
+                  <li :class="{ active: classCompany }">
+                    <a href="/v1/license/customer-list/company">Company</a>
+                  </li>
+                  <li :class="{ active: classCompanyParkers }">
+                    <a href="/v1/license/customer-list/company-parkers">Company Parkers</a>
+                  </li>
+                  <li :class="{ active: classPersonal }">
+                    <a href="/v1/license/customer-list/personal">Personal</a>
+                  </li>
+                  <li :class="{ active: classPersonalParkers }">
+                    <a href="/v1/license/customer-list/personal-parkers">Personal Parkers</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav nav-second-level collapse">
+              <li :class="{ active: parking1 }">
                 <a>
                   Parking License
                   <span class="fa arrow"></span>
@@ -172,7 +179,6 @@
                 </ul>
               </li>
             </ul>
-
           </li>
           <li :class="{ active: passcard }">
             <a :class="{ active: passcard }" href="#">
@@ -199,20 +205,6 @@
               </li>
             </ul>
           </li>
-          <!-- <li :class="{ active: wheelMaster }">
-                        <a  href="#"><i class="fa fa-motorcycle"></i> <span class="nav-label">Wheel</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" >
-                            <li :class="{ active: classMaster }">
-                              <a href="/wheel/master">Master</a>
-                            </li>
-                            <li :class="{ active: classLock }">
-                              <a href="/wheel/lock">Lock</a></li>
-                            <li :class="{ active: classPole }">
-                              <a href="/wheel/pole">Pole</a>
-                            </li>
-                        </ul>
-          </li>-->
-
           <li :class="{ active: location }">
             <a href="#">
               <i class="fa fa-globe"></i>
@@ -231,99 +223,6 @@
               </li>
             </ul>
           </li>
-
-          <!-- <li :class="{ active: gateMaster }">
-                      <a  href="#"><i class="fa fa-bandcamp"></i> <span class="nav-label">Gate Master</span><span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level collapse" >
-                        <li :class="{ active: classGateMaster }">
-                          <a href="/get-master">Master</a>
-                        </li>
-                        <li :class="{ active: classGate }">
-                          <a href="/gates">Gate</a>
-                        </li>
-                      </ul>
-          </li>-->
-          <!-- <li :class="{ active: advert }">
-                      <a  href="#"><i class="fa fa-bullhorn"></i> <span class="nav-label">Adverts</span><span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level collapse" >
-                        <li :class="{ active: classAdvert }">
-                          <a href="/advert">Adverts</a>
-                        </li>
-                      </ul>
-          </li>-->
-          <!-- <li :class="{ active: customer }">
-                        <a  href="#"><i class="fa fa-address-book "></i> <span class="nav-label">Customers</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" >
-                            <li :class="{ active: classCustomer }">
-                                <a href="/customers">All</a>
-          </li>-->
-          <!-- <li :class="{ active: classCustomerCP }">
-                                <a href="#">Branch<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="/customers/company?q=1">View Company</a>
-                                        </li>
-                                        <li>
-                                            <a href="/customers/personal?q=0">View Personal</a>
-                                        </li>
-                                    </ul>
-          </li>-->
-          <!-- </ul>
-          </li>-->
-          <!-- <li :class="{ active: passType }">
-                        <a href="#"><i class="fa fa-cube"></ i> <span class="nav-label">PassType</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" >
-                          <li :class="{ active: classPassType }">
-                              <a href="/passtype">View PassType</a>
-                          </li>
-                        </ul>
-                    </li>
-                    <li :class="{ active: staff }">
-                        <a  href="#"><i class="fa fa-child"></i> <span class="nav-label">Staff</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" >
-                          <li :class="{ active: classStaff }">
-                              <a href="/staff">View Staff</a>
-                          </li>
-                        </ul>
-                    </li>
-                    <li :class="{ active: parker }">
-                        <a  href="#"><i class="fa fa-thumb-tack "></i> <span class="nav-label">Parker</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" >
-                          <li  :class="{ active: classParker }">
-                              <a href="/parker">View Parker</a>
-                          </li>
-                        </ul>
-          </li>-->
-          <!-- <li :class="{ active: bank }">
-                        <a  href="#"><i class="fa fa-university"></i> <span class="nav-label">Bank</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse" >
-                          <li :class="{ active: classBank }">
-                              <a href="/bank">View Bank</a>
-                          </li>
-                        </ul>
-                    </li>
-                  <li :class="{ active: voucherBuy }">
-                    <a  href="#"><i class="fa fa-ticket"></i> <span class="nav-label">Voucher Buy</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" >
-                      <li :class="{ active: classVoucherBuy }">
-                        <a href="/voucher/buy">View Voucher</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a  href="#"><i class="fa fa-sliders"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" >
-                      <li>
-                        <a href="/setting/forgot_password">Forgot Password</a>
-                      </li>
-                      <li>
-                        <a href="/setting/reset_password">Reset Password</a>
-                      </li>
-                    </ul>
-          </li>-->
-          <!-- <li>
-                    <a href="/activity"><i class="fa fa-flag-o"></i> <span class="nav-label">Activity</span></a>
-          </li>-->
           <li :class="{ active: finance }">
             <a href="#">
               <i class="fa fa-line-chart"></i>
@@ -331,7 +230,9 @@
               <span class="fa arrow"></span>
             </a>
             <ul class="nav nav-second-level collapse">
-              <li :class="{ active: classGiro || classFinance || classCash || classCheque || classReceipt }">
+              <li
+                :class="{ active: classGiro || classFinance || classCash || classCheque || classReceipt }"
+              >
                 <a href="#">
                   ParkBills
                   <span class="fa arrow"></span>
@@ -367,10 +268,7 @@
     </nav>
   </div>
 </template>
-
 <script>
-
-
 export default {
   name: "NavSide",
   props: [
@@ -409,9 +307,14 @@ export default {
     "classpassCardType",
     "classpassCardAll",
     "classParking",
-    'classOperator',
+    "classOperator",
     "classSubscriber",
-    "classSeason"
+    "classSeason",
+    "classSeasonSub",
+    "classCompany",
+    "classCompanyParkers",
+    "classPersonal",
+    "classPersonalParkers"
   ],
 
   data() {
@@ -430,6 +333,7 @@ export default {
       gateMaster: null,
       advert: null,
       customer: null,
+      CustomerList: null,
       subscriber: null,
       passType: null,
       staff: null,
@@ -447,13 +351,17 @@ export default {
     }
   },
   mounted() {
-    if(this.classParking) {
+    if (this.classCompany || this.classCompanyParkers || this.classPersonal || this.classPersonalParkers) {
+      this.CustomerList = true;
       this.parking = true;
     }
-    if(this.classSeason) {
+    if (this.classParking) {
+      this.parking = true;
+    }
+    if (this.classSeason) {
       this.season = true;
     }
-    if(this.classSubscriber) {
+    if (this.classSubscriber || this.classSeasonSub) {
       this.subscriber = true;
     }
     if (this.classOperator) {
@@ -478,13 +386,20 @@ export default {
     }
     if (this.classVoucher) {
       this.carparkActive = true;
-    }if(this.classTenant) {
+    }
+    if (this.classTenant) {
       this.carparkActive = true;
     }
     if (this.classProduct) {
       this.carparkActive = true;
     }
-    if (this.classFinance || this.classGiro || this.classCash || this.classCheque || this.classReceipt) {
+    if (
+      this.classFinance ||
+      this.classGiro ||
+      this.classCash ||
+      this.classCheque ||
+      this.classReceipt
+    ) {
       this.finance = true;
     }
 
