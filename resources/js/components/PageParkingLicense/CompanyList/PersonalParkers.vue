@@ -91,15 +91,22 @@
                           <th>Mobile No.</th>
                           <th>Car Plate</th>
                           <th>Email</th>
+                          <th>Parking License</th>
                         </tr>
                       </thead>
                       <tbody v-if="result == true && errorResult === false">
-                        <tr v-for="(company, index) in companies" :key="index" class="gradeX">
+                        <tr
+                          v-for="(company, index) in companies"
+                          v-on="loadParkingLicense(company.id)"
+                          :key="index"
+                          class="gradeX"
+                        >
                           <td class="center">{{company.count}}</td>
                           <td class="center">{{company.name}}</td>
                           <td class="center">{{company.mobile}}</td>
                           <td class="center">{{company.car1 || 'NA'}}</td>
                           <td class="center">{{company.email}}</td>
+                          <td class="center">{{company.car2 || 'NA'}}</td>
                         </tr>
                       </tbody>
                       <tfoot>
@@ -176,7 +183,7 @@ export default {
       this.loadCustomer();
     },
     onChangeCustomer: function(val) {
-        this.loadData(1);
+      this.loadData(1);
     },
     paginateNum(pageNum) {
       this.pg = pageNum;
@@ -189,7 +196,7 @@ export default {
         this.loadData(1);
         return 0;
       }
-     
+
       this.objectSearch = `operator/${this.operatorID}/customer/${this.customerID}/parker?search=${this.searchResult}`;
       SearchData.findSearchResult(
         `operator/${this.operatorID}/customer?isCompany=0&search=${this.searchResult}`
@@ -222,10 +229,11 @@ export default {
         .catch(ex => {
           this.$router.push({ path: "/v1/login" });
         });
-        
     },
     loadCustomer() {
-      CarParkService.fetchAllData(`operator/${this.operatorID}/customer?isCompany=0`)
+      CarParkService.fetchAllData(
+        `operator/${this.operatorID}/customer?isCompany=0`
+      )
         .then(response => {
           this.customers = response.data.result;
           if (this.customers.length > 0) {
@@ -240,11 +248,9 @@ export default {
         });
     },
     loadData(value = 1) {
-      console.log(this.customerID)
+      console.log(this.customerID);
       this.objectLoadData = `operator/${this.operatorID}/customer/${this.customerID}/parker`;
-      CarParkService.fetchAllData(
-        `${this.objectLoadData}`
-      ).then(response => {
+      CarParkService.fetchAllData(`${this.objectLoadData}`).then(response => {
         this.companies = response.data.result;
         this.total = response.data.count;
         this.count = Math.ceil(response.data.count / 100);
@@ -272,6 +278,28 @@ export default {
           this.messageCar = "No data available.";
         }
       });
+    },
+    loadParkingLicense(val) {
+      CarParkService.fetchAllData(
+        `lease?customerID=${this.customerID}&parkerID=${val}`
+      ).then(response => {
+        if (response.data.result.length > 0 && response.data.count > 0)
+          this.licenseID = response.data.result[0].licenseID;
+      });
+
+      CarParkService.fetchAllData(`license/${this.licenseID}`).then(
+        response => {
+          if (response.data.length > 0) {
+            this.companies.forEach(el => {
+              el.car2 =
+                "PL-" +
+                response.data[0].carparkID +
+                "-" +
+                response.data[0].licenseOperatorNum;
+            });
+          }
+        }
+      );
     }
   },
   mounted() {
