@@ -117,7 +117,6 @@ import MainFooter from "../MainFooter";
 import SearchData from '../../services/SearchData';
 
 import DateFormat from '../../services/DateFormat';
-import LastUpdatedDate from '../../services/LastUpdatedDate';
 import CarParkService from '../../services/CarParkService';
 import Sequence from '../../services/Sequence';
 
@@ -160,7 +159,7 @@ export default {
     modalCreateCancel(value) {
       this.isBoxOpenAdd = value;
     },
-   
+
     getSearchResult() {
       if (this.searchResult.length === 0) {
         this.errorResult = false;

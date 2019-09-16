@@ -145,7 +145,6 @@ import MainFooter from "../MainFooter";
 import SearchData from "../../services/SearchData";
 
 import DateFormat from "../../services/DateFormat";
-import LastUpdatedDate from "../../services/LastUpdatedDate";
 import CarParkService from "../../services/CarParkService";
 import Sequence from "../../services/Sequence";
 

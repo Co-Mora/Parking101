@@ -6,7 +6,7 @@ var Vuetify = require('vuetify');
 var VuePagination = require('vue-ads-pagination')
 var Pagination = require('vue-pagination-2')
 var chosenSelect = require('chosen-js');
-const VueGoogleMaps = require('vue2-google-maps');
+var VueGoogleMaps = require('vue2-google-maps');
 
 Vue.use(VueRouter)
 
@@ -45,7 +45,7 @@ Vue.component("chosen-select", {
           $(this.$el).val(val);
       }
   },
-  
+
   updated(){
     $(this.$el).trigger("chosen:updated")
   },
@@ -67,17 +67,17 @@ Vue.use(VueGoogleMaps, {
       // OR: libraries: 'places,drawing'
       // OR: libraries: 'places,drawing,visualization'
       // (as you require)
-   
+
       //// If you want to set the version, you can do so:
       // v: '3.26',
     },
-   
+
     //// If you intend to programmatically custom event listener code
     //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
     //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
     //// you might need to turn this on.
     // autobindAllEvents: false,
-   
+
     //// If you want to manually install components, e.g.
     //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
     //// Vue.component('GmapMarker', GmapMarker)
@@ -96,7 +96,7 @@ import App from './components/App'
 import Index from './components/Index'
 import MainChart from './components/MainChart'
 
-// Route -> Car Park -> Zone / Street / Bay 
+// Route -> Car Park -> Zone / Street / Bay
 import Zone from './components/PageCarPark/Zone'
 import Street from './components/PageCarPark/Street'
 import Bay from './components/PageCarPark/Bay'
@@ -107,13 +107,13 @@ import ViewCarPark from './components/PageCarPark/PageAdd/ViewCarPark'
 import ViewCarParkProduct from './components/PageCarPark/PageAdd/ViewCarParkProduct'
 import ViewCarParkFees from './components/PageCarPark/PageAdd/ViewCarParkFees'
 
-// Route -> Location -> Country / State / City 
+// Route -> Location -> Country / State / City
 import Country from './components/PageCountry/Country'
 import State from './components/PageCountry/State'
 import City from './components/PageCountry/City'
 
 
-// Route -> Transcation -> Online Banking / Cash / Giro / Cheque 
+// Route -> Transcation -> Online Banking / Cash / Giro / Cheque
 import Fund from './components/PageFinance/Fund'
 import Cash from './components/PageFinance/Cash'
 import Giro from './components/PageFinance/Giro'
@@ -154,6 +154,23 @@ import SyncSeason from './components/PageSeason/SyncSeason'
 // Route -> PageParkingLicence -> ParkingLicence
 import ParkingLicense from './components/PageParkingLicense/ParkingLicense'
 
+// Route -> PageParkingLicence -> ParkingLicence
+import Company from './components/PageParkingLicense/CompanyList/Company'
+import ViewCompany from './components/PageParkingLicense/CompanyList/ViewCompany'
+
+
+// Route -> PageParkingLicence -> ParkingLicence
+import Personal from './components/PageParkingLicense/CompanyList/Personal'
+import ViewPersonal from './components/PageParkingLicense/CompanyList/ViewPersonal'
+
+
+
+// Route -> PageParkingLicence -> ParkingLicence
+import CompanyParkers from './components/PageParkingLicense/CompanyList/CompanyParkers'
+
+// Route -> PageParkingLicence -> ParkingLicence
+import PersonalParkers from './components/PageParkingLicense/CompanyList/PersonalParkers'
+
 
 const router = new VueRouter({
     mode: 'history',
@@ -162,6 +179,40 @@ const router = new VueRouter({
             path: '/license',
             name: 'license',
             component: ParkingLicense
+        },
+        {
+            path: '/v1/license/customer-list/company',
+            name: 'company',
+            component: Company
+        },
+        {
+            path: '/v1/license/customer-list/company/view',
+            name: 'ViewCompany',
+            component: ViewCompany,
+            props: (route) => ({ customerID: route.query.customerID})
+
+        },
+        {
+            path: '/v1/license/customer-list/personal',
+            name: 'Personal',
+            component: Personal
+        },
+        {
+            path: '/v1/license/customer-list/personal/view',
+            name: 'ViewPersonal',
+            component: ViewPersonal,
+            props: (route) => ({ customerID: route.query.customerID})
+
+        },
+        {
+            path: '/v1/license/customer-list/company-parkers',
+            name: 'CompanyParkers',
+            component: CompanyParkers
+        },
+        {
+            path: '/v1/license/customer-list/personal-parkers',
+            name: 'PersonalParkers',
+            component: PersonalParkers
         },
         {
             path: '/v1/dashboard',
@@ -310,7 +361,7 @@ const router = new VueRouter({
             name: 'syncseason',
             component: SyncSeason
         },
-        
+
     ],
 });
 

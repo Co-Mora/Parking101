@@ -389,7 +389,7 @@
                               <input
                                   :value="noSST"
                                   v-model="noSST"
-                                  :checked="noSST == 1"
+                                  :checked="noSST != 1"
                                 type="checkbox"
 
                               />
@@ -882,7 +882,7 @@ export default {
       });
     },
 
-    loadAddress(val) {
+    loadAddress() {
       CarParkService.fetchAllData(`address/${this.address1}`).then(response => {
         let res = JSON.parse(response.data[0].address);
         let parsedRes = JSON.parse(res);
@@ -905,27 +905,27 @@ export default {
         DateFormat.dateStartProcess(this.seasonSetting);
         this.commencementDate1 = response.data[0].CommencementDate1;
         this.commencementDate2 = response.data[0].CommencementDate2;
-        if (this.commencementDate1 == 1 && this.commencementDate2 == 16)
+        if (this.commencementDate1 === 1 && this.commencementDate2 === 16)
           this.allowHalf = 1;
-        if (this.commencementDate1 == 1 || this.commencementDate2 == 0)
+        if (this.commencementDate1 === 1 || this.commencementDate2 === 0)
             this.allowFull = 1;
-        if (this.commencementDate1 == 0 && this.commencementDate2 == 0)
+        if (this.commencementDate1 === 0 && this.commencementDate2 === 0)
                 this.allowAny = 1;
             this.seasonSetting.forEach(el => {
-            this.startDate = el.startDate;
-            this.endDate = el.endDate;
-            this.exemptLatePay = el.ExemptLatePay;
-            this.exemptSST = el.ExemptSST;
+            this.startDate          = el.startDate;
+            this.endDate            = el.endDate;
+            this.exemptLatePay      = el.ExemptLatePay;
+            this.exemptSST          = el.ExemptSST;
             this.suspendApplication = el.SuspendApplication;
-            this.exemptStopbBill =el.ExemptStopbBill;
-            this.noSST =el.NoSST;
-            this.parkaideOnly = el.ParkaideOnly;
-            this.parkaideEnable = el.ParkaideEnable;
-            this.reactivation = el.Reactivation;
-            this.latePenalty = el.LatePenalty;
-            this.reinstatement = el.Reinstatement;
+            this.exemptStopbBill    =   el.ExemptStopbBill;
+            this.noSST          =   el.NoSST;
+            this.parkaideOnly   =   el.ParkaideOnly;
+            this.parkaideEnable =   el.ParkaideEnable;
+            this.reactivation   =   el.Reactivation;
+            this.latePenalty    =   el.LatePenalty;
+            this.reinstatement  =   el.Reinstatement;
         });
-
+        console.log(this.noSST)
       });
     },
     loadBilingSetting() {
@@ -957,7 +957,6 @@ export default {
     },
     loadPaymentMethod() {
 
-
         CarParkService.fetchAllData(
         `carpark/${this.$route.query.carparkID}/seasonSetting`
       ).then(response => {
@@ -972,17 +971,16 @@ export default {
         `carpark/${this.$route.query.carparkID}/tnc`
       ).then(response => {
         this.tnc = response.data[0].tnc;
-
-        // var xmlString = res;
-        // var doc = new DOMParser().parseFromString(xmlString, "text/html");
-        // console.log(doc.firstChild.innerHTML); // => <div id="foo">...
-        // console.log(doc.firstChild.firstChild.innerHTML) // => <a href="#">...
-        // var temp = doc.firstChild.innerHTML;
-        // this.tnc = temp;
       });
     }
   },
   mounted() {
+      this.loadSeasonSetting();
+      this.loadData();
+      this.loadPaymentMethod();
+      this.loadBillingTerms();
+      this.geolocate();
+
       $(document).ready(function() {
           $(".summernote").summernote();
           // // $('.summernote').summernote('code', this.tnc);
@@ -995,12 +993,7 @@ export default {
               radioClass: "iradio_square-green"
           });
       });
-      this.loadSeasonSetting();
-      this.loadPaymentMethod();
-      this.loadBillingTerms();
 
-    this.geolocate();
-    this.loadData();
 
 
 
