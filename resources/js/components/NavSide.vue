@@ -128,11 +128,11 @@
                   </li>
                 </ul>
               </li>
-              <li :class="{ active: classTenant }">
+              <li :class="{ active: classCarParkTenant }">
                 <a href="#">Car Park Tenant</a>
                 <ul class="nav nav-third-level">
-                  <li :class="{ active: classTenant }">
-                    <a href="/v1/carpark/tenant">Car Park Tenant</a>
+                  <li :class="{ active: classCarParkTenant }">
+                    <a href="/v1/carpark-tenant">Car Park Tenant</a>
                   </li>
                 </ul>
               </li>
@@ -290,6 +290,7 @@ export default {
     "classAdvert",
     "classCustomer",
     "classCustomerCP",
+    "classCarParkTenant",
     "classCarPark",
     "classPassType",
     "classStaff",
@@ -390,7 +391,7 @@ export default {
     if (this.classTenant) {
       this.carparkActive = true;
     }
-    if (this.classProduct) {
+    if (this.classProduct || this.classCarParkTenant) {
       this.carparkActive = true;
     }
     if (

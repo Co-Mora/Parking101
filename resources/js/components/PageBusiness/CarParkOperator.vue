@@ -220,7 +220,7 @@ export default {
         this.dataOperator = response.data;
         this.isBoxOpen = true;
       });
-          this.isBoxOpen = false;
+      this.isBoxOpen = false;
       $("#myModalView").modal("hide");
 
     },
