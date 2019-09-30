@@ -39,6 +39,7 @@
                   <div class="ibox-title">
                     <h4>{{companyName}}</h4>
                     <h4>Company Profile</h4>
+                    <div class="hr-line-dashed"></div>
                   </div>
                   <div class="col-lg-12">
                     <div class="form-group row">
@@ -59,22 +60,24 @@
                             <label class="col-form-label">Company Reg No. *</label>
                             <div class="input-group">
                               <input disabled v-model="regNo" type="text" class="form-control" />
+
+                              <label>Use capital letters and numbers only.</label>
                             </div>
                           </div>
                           <div class="col-sm-12">
-                            <label class="col-form-label">Address 1 *</label>
+                            <label class="col-form-label">Address 1</label>
                             <div class="input-group">
                               <input disabled v-model="address1" type="text" class="form-control" />
                             </div>
                           </div>
                           <div class="col-sm-12">
-                            <label class="col-form-label">Address 2 *</label>
+                            <label class="col-form-label">Address 2</label>
                             <div class="input-group">
                               <input disabled v-model="address2" type="text" class="form-control" />
                             </div>
                           </div>
                           <div class="col-sm-12">
-                            <label class="col-form-label">Address 3 *</label>
+                            <label class="col-form-label">Address 3</label>
                             <div class="input-group">
                               <input disabled v-model="address3" type="text" class="form-control" />
                             </div>
@@ -123,13 +126,15 @@
                           </div>
                         </div>
                       </div>
-                      <h4>Company Contact</h4>
                     </div>
+                    <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                       <div class="col-sm-12">
+                        <h4>Company Contact</h4>
+
                         <div class="row">
                           <div class="col-md-6">
-                            <label class="col-form-label">Company Telefone NO.</label>
+                            <label class="col-form-label">Company Telefone No *</label>
                             <div class="input-group">
                               <input type="text" disabled v-model="telephone" class="form-control" />
                               <span class="input-group-append">
@@ -140,7 +145,7 @@
                             </div>
                           </div>
                           <div class="col-md-6">
-                            <label class="col-form-label">Company Phone NO.</label>
+                            <label class="col-form-label">Company PIC Phone (Mobile) *</label>
                             <div class="input-group">
                               <input type="text" disabled v-model="phone" class="form-control" />
                               <span class="input-group-append">
@@ -151,14 +156,14 @@
                             </div>
                           </div>
                           <div class="col-md-6">
-                            <label class="col-form-label">Company PIC Email</label>
+                            <label class="col-form-label">Company PIC Email *</label>
                             <div class="input-group">
-                              <input type="text" disabled v-model="email" class="form-control" />
-                              <span class="input-group-append">
-                                <button type="button" class="btn btn-default">
-                                  <i class="fa fa-email"></i>
-                                </button>
-                              </span>
+                              <input
+                                type="text"
+                                disabled
+                                v-model="companyEmail"
+                                class="form-control"
+                              />
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -169,7 +174,7 @@
                             </div>
                           </div>
                           <div class="col-md-6">
-                            <label class="col-form-label">Company PIC Name</label>
+                            <label class="col-form-label">Company PIC Name *</label>
                             <div class="input-group">
                               <input type="text" disabled v-model="picName" class="form-control" />
                               <span class="input-group-append"></span>

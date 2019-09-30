@@ -14,9 +14,6 @@
                 <div class="ibox-content">
                   <div class="row">
                     <div class="col-lg-6">
-                      <div
-                        style="margin-bottom: 10px;"
-                      >{{'View ' + start + '-' + end + ' ' + ' of ' + ' ' + total}}</div>
                       <paginate
                         :page-count="count"
                         :page-range="3"
@@ -27,6 +24,9 @@
                         :container-class="'pagination'"
                         :page-class="'page-item'"
                       ></paginate>
+                      <div
+                        style="margin-bottom: 10px;"
+                      >{{'View ' + start + '-' + total + ' ' + ' of ' + ' ' + total}}</div>
                     </div>
 
                     <div class="col-sm-6">

@@ -4874,7 +4874,7 @@ code {
   display: table;
 }
 .ibox-title {
-  -moz-border-bottom-colors: none;
+  /* -moz-border-bottom-colors: none;
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
@@ -4883,7 +4883,7 @@ code {
   border-image: none;
   border-style: solid solid none;
   border-width: 2px 0 0;
-  color: inherit;
+  color: inherit; */
   margin-bottom: 0;
   padding: 15px 90px 8px 15px;
   min-height: 48px;

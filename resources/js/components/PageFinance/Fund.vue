@@ -53,11 +53,11 @@
                         <thead>
                           <tr>
                             <th>NO.</th>
+                            <th>Ref. No.</th>
                             <th>Date</th>
                             <th>Transaction Date</th>
                             <th>Transaction ID</th>
                             <th>Auth. Code</th>
-                            <th>Ref. No.</th>
                             <th>Payment Method</th>
                             <th>Bank Name</th>
                             <th>CC Name</th>
@@ -66,17 +66,17 @@
                             <th>Currency</th>
                             <th>Amount</th>
                             <th>Status</th>
-                            <th>Receipt</th>
+                            <th>Receipt No.</th>
                           </tr>
                         </thead>
                         <tbody v-if="result == true && errorResult === false">
                           <tr v-for="(data, index) in dataSource" :key="index" class="gradeX">
                             <td class="center">{{data.count}}</td>
+                            <td class="center">{{data.RefNo}}</td>
                             <td class="center">{{data.createDate || 'Unknown'}}</td>
                             <td class="center">{{data.TranDate}}</td>
                             <td class="center">{{data.TransId}}</td>
                             <td class="center">{{data.AuthCode}}</td>
-                            <td class="center">{{data.RefNo}}</td>
                             <td class="center">{{data.PaymentId}}</td>
                             <td class="center">{{data.S_bankname || 'NA'}}</td>
                             <td class="center">{{data.CCName || 'NA'}}</td>
@@ -310,7 +310,7 @@ export default {
       if (this.dataSource.length === 0) {
         this.messageSource = "No data available.";
       }
-    },
+    }
     // loadCarPark(val) {
     //   CarParkService.fetchAllData(`carpark?carparkID=${val}`).then(response => {
     //     if (response.data.result.length !== 0) {

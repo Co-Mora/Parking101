@@ -20,11 +20,11 @@
               </a>
               <ul class="dropdown-menu animated fadeInRight m-t-xs">
                 <li>
-                  <a class="dropdown-item" href="/profile">Account</a>
+                  <a class="dropdown-item" href="/v1/profile">Account</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a class="dropdown-item" href="/login">Logout</a>
+                  <a class="dropdown-item" href="/v1/login">Logout</a>
                 </li>
               </ul>
             </div>
@@ -54,7 +54,7 @@
                 </a>
                 <ul class="nav nav-third-level">
                   <li :class="{ active: classSeasonSub }">
-                    <a href="/v1/subscriber/sync">Sync to ParkAide</a>
+                    <a href="/v1/subscriber/season/sync">Sync to ParkAide</a>
                   </li>
                 </ul>
               </li>
@@ -121,12 +121,7 @@
                 </ul>
               </li>
               <li :class="{ active: classProduct }">
-                <a href="#">Car Park Product</a>
-                <ul class="nav nav-third-level">
-                  <li :class="{ active: classProduct }">
-                    <a href="/v1/carpark/product">Car Park Product</a>
-                  </li>
-                </ul>
+                <a href="/v1/carpark/product">Car Park Product</a>
               </li>
               <li :class="{ active: classCarParkTenant }">
                 <a href="#">Car Park Tenant</a>
@@ -352,7 +347,12 @@ export default {
     }
   },
   mounted() {
-    if (this.classCompany || this.classCompanyParkers || this.classPersonal || this.classPersonalParkers) {
+    if (
+      this.classCompany ||
+      this.classCompanyParkers ||
+      this.classPersonal ||
+      this.classPersonalParkers
+    ) {
       this.CustomerList = true;
       this.parking = true;
     }

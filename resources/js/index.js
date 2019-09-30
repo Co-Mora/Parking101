@@ -139,6 +139,9 @@ import NotFound from "./components/PageNotFound/NotFound";
 // Route -> PageSeason -> SyncSeason
 import SyncSeason from "./components/PageSeason/SyncSeason";
 
+// Route -> PageSubscriber -> Sync
+import Sync from "./components/PageSubscriber/Sync";
+
 // Route -> PageParkingLicence -> ParkingLicence
 import ParkingLicense from "./components/PageParkingLicense/ParkingLicense";
 
@@ -355,6 +358,12 @@ const router = new VueRouter({
             path: "/v1/season",
             name: "syncseason",
             component: SyncSeason
+        },
+
+        {
+            path: "/v1/subscriber/season/sync",
+            name: "Sync",
+            component: Sync
         }
     ]
 });

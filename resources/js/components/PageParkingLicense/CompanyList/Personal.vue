@@ -14,9 +14,6 @@
                 <div class="ibox-content">
                   <div class="row">
                     <div class="col-lg-6">
-                      <div
-                        style="margin-bottom: 10px;"
-                      >{{'View ' + start + '-' + end + ' ' + ' of ' + ' ' + total}}</div>
                       <paginate
                         :page-count="count"
                         :page-range="3"
@@ -27,6 +24,9 @@
                         :container-class="'pagination'"
                         :page-class="'page-item'"
                       ></paginate>
+                      <div
+                        style="margin-bottom: 10px;"
+                      >{{'View ' + start + '-' + total + ' ' + ' of ' + ' ' + total}}</div>
                     </div>
 
                     <div class="col-sm-6">
@@ -206,15 +206,50 @@ export default {
           this.$router.push({ path: "/v1/login" });
         });
     },
-    loadData(value = 1) {
-      if (this.operatorID === 0) {
-        this.objectLoadData = `customer?isCompany=1`;
-      } else {
-        this.objectLoadData = `operator/${this.operatorID}/customer?isCompany=0`;
+     loadData(value = 1) {
+      if (this.operatorID == 0) {
+        this.loadAllOperator(value);
       }
-      CarParkService.fetchAllData(
-        `${this.objectLoadData}&page=${value}&sort=createDate`
-      ).then(response => {
+      if (this.operatorID != 0) {
+        console.log("allCustomer", this.operatorID)
+        this.loadAllCustomer(value)
+      }
+    },
+    loadAllCustomer(value) {
+       this.objectLoadData = `operator/${this.operatorID}/customer?isCompany=1`;
+        CarParkService.fetchAllData(
+          `${this.objectLoadData}&page=${value}&sort=createDate`
+        ).then(response => {
+          this.personals = response.data.result;
+          this.total = response.data.count;
+          this.count = Math.ceil(response.data.count / 100);
+          if (this.personals.length < 100) {
+            this.count = value;
+          }
+          DateFormat.dateProcees(this.personals);
+          Sequence.dataSequences(this.personals, value, this.count);
+
+          if (value == 1) {
+            this.start = 1;
+            this.end = 100;
+          } else {
+            if (value === this.count && this.personals.length < 100) {
+              this.start = Sequence.handleViewSquence();
+              this.end = this.total;
+            } else {
+              this.start = Sequence.handleViewSquence() - 100;
+              this.end = Sequence.handleEndSquence() - 101;
+            }
+          }
+
+          this.messageCar = "";
+          if (this.personals.length === 0) {
+            this.messageCar = "No data available.";
+          }
+        });
+    },
+    loadAllOperator(value) {
+      CarParkService.fetchAllData(`customer?isCompany=1&page=${value}&sort=createDate`).then(response => {
         this.personals = response.data.result;
         this.total = response.data.count;
         this.count = Math.ceil(response.data.count / 100);
@@ -229,7 +264,7 @@ export default {
           this.end = 100;
         } else {
           if (value === this.count && this.personals.length < 100) {
-            this.start = Sequence.handleViewSquence();
+            this.start = 101;
             this.end = this.total;
           } else {
             this.start = Sequence.handleViewSquence() - 100;

@@ -50,20 +50,26 @@
                       >
                         <thead>
                           <tr>
-                            <th>NO.</th>
-                            <th>Car Park Name</th>
-                            <th>Mobile</th>
+                            <th>No.</th>
                             <th>Operator Name</th>
-                            <th>Season Date</th>
+                            <th>CP ID</th>
+                            <th>CP Code</th>
+                            <th>Car Park</th>
+                            <th>ParkAide Car Park ID</th>
+                            <th>Mobile No</th>
+                            <th>Sent Date</th>
                           </tr>
                         </thead>
                         <tbody v-if="result == true && errorResult === false">
                           <tr v-for="(data, index) in dataSource" :key="index" class="gradeX">
                             <td class="center">{{data.count}}</td>
-                            <td class="center">{{data.carparkName || 'N/A'}}</td>
-                            <td class="center">{{data.mobile || 'N/A'}}</td>
-                            <td class="center">{{data.operatorName}}</td>
-                            <td class="center">{{data.createDate}}</td>
+                            <td class="center">{{data.operatorName || 'N/A'}}</td>
+                            <td class="center">{{data.carparkID || 'N/A'}}</td>
+                            <td class="center">{{data.carparkCode}}</td>
+                            <td class="center">{{data.carparkName}}</td>
+                            <td class="center">{{data.carparkCode2}}</td>
+                            <td class="center">{{data.mobile}}</td>
+                            <td class="center">{{data.sentDate}}</td>
                           </tr>
                         </tbody>
                         <tfoot>
@@ -159,7 +165,7 @@ export default {
         `sync/season?search=${this.searchResult}`
       ).then(response => {
         this.dataSource = response.data.result;
-        DateFormat.dateProcees(this.dataSource);
+        DateFormat.dateSentDateProcess(this.dataSource);
         Sequence.dataSequences(this.dataSource, 1, this.count);
 
         this.errorResult = false;
@@ -185,7 +191,7 @@ export default {
           if (this.dataSource.length < 100) {
             this.count = value;
           }
-          DateFormat.dateProcees(this.dataSource);
+          DateFormat.dateSentDateProcess(this.dataSource);
           Sequence.dataSequences(this.dataSource, value, this.count);
         })
         .catch(ex => {
