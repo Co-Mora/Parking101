@@ -83,7 +83,7 @@
                               <a
                                 v-if="data.path"
                                 style="color:#3498db"
-                                :href="`/transaction/receipt/view?receiptID=${data.path}`"
+                                :href="`/v1/transaction/receipt/view?receiptID=${data.path}`"
                               >{{'OR' + data.carparkID + '-' + data.receiptNum}}</a>
                               {{!data.path ? 'N/A' : ''}}
                             </td>
