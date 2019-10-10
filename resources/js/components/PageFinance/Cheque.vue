@@ -1,9 +1,9 @@
 <template>
   <div>
     <div id="wrapper">
-      <nav-side :classCheque="classCheque"/>
+      <nav-side :classCheque="classCheque" />
       <div id="page-wrapper" class="gray-bg">
-        <NavBar/>
+        <NavBar />
         <div class="ibox-title">Home / Transaction / ParkBills / Cheque</div>
         <div class="wrapper wrapper-content animated fadeInRight">
           <div class="row">
@@ -32,7 +32,7 @@
                           placeholder="Search"
                           type="text"
                           class="form-control form-control-sm"
-                        >
+                        />
                         <span class="input-group-append">
                           <button
                             type="button"
@@ -55,9 +55,9 @@
                             <th>Cheque Date</th>
                             <th>Transaction ID</th>
                             <th>Bank Code</th>
+                            <th>Bank Name</th>
                             <th>Cheque No</th>
                             <th>Ref. No</th>
-                            <th>Remark</th>
                             <th>Staff No.</th>
                             <th>Staff Name</th>
                             <th>Amount</th>
@@ -72,12 +72,13 @@
                             <td class="center">{{data.ChequeDate || 'N/A'}}</td>
                             <td class="center">{{data.TransId}}</td>
                             <td class="center">{{data.BankCode}}</td>
+                            <td class="center">{{data.BankName}}</td>
+
                             <td class="center">{{data.ChequeNumber}}</td>
                             <td class="center">{{data.RefNo}}</td>
-                            <td class="center">{{data.remark || 'N/A'}}</td>
                             <td class="center">{{data.personnelCode || 'N/A'}}</td>
                             <td class="center">{{data.staffName || 'N/A'}}</td>
-                            <td class="center">{{data.Amount || 'N/A'}}</td>
+                            <td class="center">{{parseFloat(data.Amount) || 'N/A'}}</td>
                             <td class="center">{{data.Status ? 'Success' : 'Failed'}}</td>
                             <td class="center">
                               <a
@@ -115,7 +116,7 @@
             </div>
           </div>
         </div>
-        <MainFooter/>
+        <MainFooter />
       </div>
     </div>
   </div>
@@ -170,6 +171,7 @@ export default {
   methods: {
     paginateNum(pageNum) {
       this.loadData(pageNum);
+      parseFloat;
     },
     getSearchResult() {
       if (this.searchResult.length === 0) {
@@ -207,14 +209,14 @@ export default {
             this.count = value;
           }
           Sequence.dataSequences(this.dataSource, value, this.count);
-
           this.loadData1();
         })
         .catch(ex => {
           this.$route.push({ path: "/v1/login" });
         });
     },
-     loadData1() {
+
+    loadData1() {
       CarParkService.fetchAllData(`receipt`).then(response => {
         this.dataPath = response.data.result;
         DateFormat.dateProcees(this.dataSource);
@@ -226,6 +228,7 @@ export default {
         }
       });
     },
+
     loadData2() {
       this.dataSource.forEach(el => {
         this.dataPath.forEach(ee => {
@@ -233,7 +236,6 @@ export default {
             el.path = ee.collectionID;
             el.receiptNum = ee.receiptNum;
             //this.loadCollection(ee.collectionID);
-
           }
         });
       });

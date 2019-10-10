@@ -222,6 +222,7 @@ export default {
         if (this.carpark.length < 100) {
           this.count = value;
         }
+        
         DateFormat.dateProcees(this.carpark);
         Sequence.dataSequences(this.carpark, value, this.count);
 

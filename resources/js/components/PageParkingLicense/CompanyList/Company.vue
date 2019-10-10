@@ -239,8 +239,10 @@ export default {
               this.start = Sequence.handleViewSquence();
               this.end = this.total;
             } else {
+
               this.start = Sequence.handleViewSquence() - 100;
               this.end = Sequence.handleEndSquence() - 101;
+            
             }
           }
 
