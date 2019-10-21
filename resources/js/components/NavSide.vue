@@ -124,12 +124,7 @@
                 <a href="/v1/carpark/product">Car Park Product</a>
               </li>
               <li :class="{ active: classCarParkTenant }">
-                <a href="#">Car Park Tenant</a>
-                <ul class="nav nav-third-level">
-                  <li :class="{ active: classCarParkTenant }">
-                    <a href="/v1/carpark-tenant">Car Park Tenant</a>
-                  </li>
-                </ul>
+                <a  href="/v1/carpark-tenant">Car Park Tenant</a>
               </li>
             </ul>
           </li>
