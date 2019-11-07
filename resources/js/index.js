@@ -163,7 +163,7 @@ const router = new VueRouter({
     mode: "history",
     routes: [
         {
-            path: "/license",
+            path: "/v1/license",
             name: "license",
             component: ParkingLicense
         },

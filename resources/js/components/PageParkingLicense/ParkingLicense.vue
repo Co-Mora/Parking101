@@ -28,7 +28,7 @@
                       ></paginate>
                     </div>
                     <div class="col-sm-6">
-                      <div class="input-group" style="margin-bottom: 20px">
+                      <div class="input-group" style="margin-bottom: 10px">
                         <input
                           v-model="searchResult"
                           @change="getSearchResult"
@@ -45,7 +45,7 @@
                         </span>
                       </div>
                     </div>
-                    <div class="col-sm-12 m-b-xs" style="margin-bottom:30px;">
+                    <div class="col-sm-12 m-b-xs" style="margin-bottom:10px;">
                       <chosen-select
                         v-model="operatorID"
                         class="chosen-select form-control m-b"
@@ -62,7 +62,7 @@
                         >{{op.name}}</option>
                       </chosen-select>
                     </div>
-                    <div class="col-sm-12 m-b-xs" style="margin-bottom:30px;">
+                    <div class="col-sm-12 m-b-xs" style="margin-bottom:10px;">
                       <chosen-select
                         v-model="carparkID"
                         data-vv-as="carpark"
