@@ -60,7 +60,7 @@
         "vue-router": "^3.0.6",
         "vue-select": "^3.1.0",
         "vue-swal": "^1.0.0",
-        "vue2-google-maps": "^0.10.6",
+        "vue2-google-maps": "^0.10.7",
         "vueify": "^9.4.1",
         "vuejs-paginate": "^2.1.0",
         "vuetify": "^1.5.2",
